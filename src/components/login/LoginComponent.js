@@ -188,6 +188,7 @@ const LoginComponent = () => {
             </div>
           </Paper>
         </div>
+        {/* 
         <Button
           className={classes.button} variant="contained"
           color="primary" onClick={handleOnClickI}
@@ -199,7 +200,7 @@ const LoginComponent = () => {
           color="primary" onClick={handleOnClickT}
         >
           講師用ショトカ
-        </Button>
+        </Button>*/}
         
         <Dialog
           open={flag} onClose={handleClose}
@@ -219,7 +220,7 @@ const LoginComponent = () => {
           </DialogActions>
         </Dialog>
       </div>
-      {/* サインアップ用 */}
+      {/* サインアップ用 
       <Fab
         className={classes.margin}
         size="small"
@@ -228,7 +229,7 @@ const LoginComponent = () => {
         onClick={() => history.push('/SignUp')}
       >
         <AddIcon />
-      </Fab>
+      </Fab>*/}
     </div>
   );
 };
