@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
     [theme.breakpoints.up('md')]: {
-      marginLeft: 225,
+      marginLeft: 200,
     },
   },
   button: {

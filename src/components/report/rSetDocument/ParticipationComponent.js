@@ -234,7 +234,7 @@ const ParticipationComponent = () => {
 
   const handleOnClickI = () => {
     const usersRef = firebaseDb.ref(userId +'r/participation');
-    const ref = firebaseDb.ref('participation/' +userId);
+    const ref = firebaseDb.ref('report/participation/' +userId);
     if(keyIn === 0) {
       usersRef.push({
         "company": values.company,
@@ -247,9 +247,9 @@ const ParticipationComponent = () => {
         "impressions": values.impressions,
         "today" : today,
         "day" : day,
-        "name" : name,
       });
       ref.push({"company" : values.company});
+      ref.update({"name" : name});
     }
     else {
       keyIn = 0;

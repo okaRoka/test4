@@ -6,6 +6,7 @@ import TalkContainer from '../talk/TalkContainer';
 import Settings from '../../components/settings/SettingsComponent';
 
 import BookContainer from '../book/BookContainer';
+import HistoryContainer from '../report/rHistory/HistoryContainer';
 import ConfirmContainer from '../book/bConfirm/ConfirmContainer';
 import LessContainer from '../less/LessContainer';
 
@@ -39,6 +40,11 @@ const Home2Container = () => {
           path="/home2/book"
           exact
           component={BookContainer}
+        />
+        <Route
+          path="/home2/book/rHistory"
+          exact
+          render={() => <HistoryContainer />}
         />
         <Route
           path="/home2/book/bConfirm"

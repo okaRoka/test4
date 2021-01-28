@@ -286,7 +286,7 @@ const ApplicationComponent = () => {
 
   const handleOnClickI = () => {
     const usersRef = firebaseDb.ref(userId +'r/application');
-    const ref = firebaseDb.ref('application/' +userId);
+    const ref = firebaseDb.ref('report/application/' +userId);
     if(keyIn === 0) {
       usersRef.push({
         "company" : values.company,
@@ -299,9 +299,9 @@ const ApplicationComponent = () => {
         "deadline" : values.deadline,
         "today" : today,
         "day" : day,
-        "name" : name,
       });
       ref.push({"company" : values.company});
+      ref.update({"name" : name});
     }
     else {
       keyIn = 0;

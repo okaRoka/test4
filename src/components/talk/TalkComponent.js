@@ -40,8 +40,9 @@ ref.on('child_added', (snapshot) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
+    marginRight: 10,
     [theme.breakpoints.up('md')]: {
-      marginLeft: 90,
+      marginLeft: 80,
     },
   },
   root2: {
@@ -56,19 +57,19 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     bottom: 0,
     [theme.breakpoints.up('md')]: {
-      marginLeft: 90,
+      marginLeft: 80,
     },
   },
   lbutton: {
     maxWidth: '100%',
     [theme.breakpoints.up('md')]: {
-      marginLeft: 90,
+      marginLeft: 80,
     },
   },
   rbutton: {
     maxWidth: '100%',
     [theme.breakpoints.up('md')]: {
-      marginRight: 90,
+      marginRight: 80,
     },
   },
 }));

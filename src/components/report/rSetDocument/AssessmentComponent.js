@@ -192,7 +192,7 @@ const AssessmentComponent = () => {
 
   const handleOnClickI = () => {
     const usersRef = firebaseDb.ref(userId +'r/assessment');
-    const ref = firebaseDb.ref('assessment/' +userId);
+    const ref = firebaseDb.ref('report/assessment/' +userId);
     if(keyIn === 0) {
       usersRef.push({
         "company" : values.company,
@@ -204,9 +204,9 @@ const AssessmentComponent = () => {
         "remedy" : values.remedy,
         "today" : today,
         "day" : day,
-        "name" : name,
       });
       ref.push({"company" : values.company});
+      ref.update({"name" : name});
     }
     else {
       keyIn = 0;

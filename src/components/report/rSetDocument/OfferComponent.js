@@ -357,7 +357,7 @@ const Offer1Component = () => {
 
   const handleOnClickI = () => {
     const usersRef = firebaseDb.ref(userId +'r/offer');
-    const ref = firebaseDb.ref('offer/' +userId);
+    const ref = firebaseDb.ref('report/offer/' +userId);
     if(keyIn === 0) {
       usersRef.push({
         "company" : values.company,
@@ -383,9 +383,9 @@ const Offer1Component = () => {
         "job_description" : values.job_description,
         "today" : today,
         "day" : day,
-        "name" : name,
       });
       ref.push({"company" : values.company});
+      ref.update({"name" : name});
     }
     else {
       keyIn = 0;

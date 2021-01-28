@@ -812,7 +812,7 @@ const ExaminationComponent = () => {
 
   const handleOnClickI = () => {
     const usersRef = firebaseDb.ref(userId +'r/examination');
-    const ref = firebaseDb.ref('examination/' +userId);
+    const ref = firebaseDb.ref('report/examination/' +userId);
     if(keyIn === 0) {
       usersRef.push({
         "company": values.company,
@@ -840,9 +840,9 @@ const ExaminationComponent = () => {
         "select": values.select,
         "today" : today,
         "day" : day,
-        "name" : name,
       });
       ref.push({"company" : values.company});
+      ref.update({"name" : name});
     }
     else {
       keyIn = 0;

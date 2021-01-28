@@ -147,7 +147,7 @@ const InternComponent = () => {
 
   const handleOnClickI = () => {
     const usersRef = firebaseDb.ref(userId +'r/intern');
-    const ref = firebaseDb.ref('intern/' +userId);
+    const ref = firebaseDb.ref('report/intern/' +userId);
     if(keyIn === 0) {
       usersRef.push({
         "company" : values.company,
@@ -158,9 +158,9 @@ const InternComponent = () => {
         "impressions" : values.impressions,
         "today" : today,
         "day" : day,
-        "name" : name,
       });
       ref.push({"company" : values.company});
+      ref.update({"name" : name});
     }
     else {
       keyIn = 0;

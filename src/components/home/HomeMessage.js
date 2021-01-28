@@ -69,7 +69,7 @@ const HomeMessage = (props) => {
         );
       }
       else {
-        return 0;
+        return (<div key={i} />);
       };
     });
   };

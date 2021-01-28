@@ -186,7 +186,7 @@ const TrainingComponent = () => {
 
   const handleOnClickI = () => {
     const usersRef = firebaseDb.ref(userId +'r/training');
-    const ref = firebaseDb.ref('training/' +userId);
+    const ref = firebaseDb.ref('report/training/' +userId);
     if(keyIn === 0) {
       usersRef.push({
         "company" : values.company,
@@ -201,9 +201,9 @@ const TrainingComponent = () => {
         "impressions" : values.impressions,
         "today" : today,
         "day" : day,
-        "name" : name,
       });
       ref.push({"company" : values.company});
+      ref.update({"name" : name});
     }
     else {
       keyIn = 0;
