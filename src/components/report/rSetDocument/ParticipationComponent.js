@@ -68,6 +68,7 @@ const ParticipationComponent = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user.userId);
   const name = useSelector(state => state.auth.user.userName);
+  const flagT = useSelector(state => state.auth.flagT);
   const oneData = useSelector(state => state.history.oneData);
   const [flag, setFlag] = React.useState(true);
   // 初期化
@@ -281,40 +282,34 @@ const ParticipationComponent = () => {
         <p>企業名</p>
           <Typography className={classes.check1} >{check1}</Typography>
           <TextField
-            className={classes.size}
-            name='company'
-            label="例）株式会社○○" 
-            variant="outlined"
-            value={values.company}
+            className={classes.size} name='company'
+            label="例）株式会社○○" variant="outlined"
+            disabled={flagT} value={values.company}
             onChange={handleChange('company')}
           />
 
         <p>住所</p>
           <Typography className={classes.check1} >{check2}</Typography>
           <TextField
-            className={classes.size}
-            name='address'
-            label="住所を入力"
-            variant="outlined"
-            value={values.address}
+            className={classes.size} name='address'
+            label="住所を入力" variant="outlined"
+            disabled={flagT} value={values.address}
             onChange={handleChange('address')}
           />
 
         <p>訪問日時</p>
           <Typography className={classes.check1} >{check3}</Typography>
           <TextField
-            className={classes.size}
-            name='visit'
-            type="date"
-            variant="outlined"
-            value={values.visit}
+            className={classes.size} name='visit'
+            type="date" variant="outlined"
+            disabled={flagT} value={values.visit}
             onChange={handleChange('visit')}
           />
 
         <p>活動内容</p>
           <Typography className={classes.check1} >{check4}</Typography>
           <Paper variant="outlined" className={classes.haikei}>
-            <FormControl>
+            <FormControl disabled={flagT}>
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
@@ -330,7 +325,7 @@ const ParticipationComponent = () => {
                 />
               </FormGroup>
             </FormControl>
-            <FormControl>
+            <FormControl disabled={flagT}>
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
@@ -351,12 +346,9 @@ const ParticipationComponent = () => {
         <p>質問内容と企業の返答</p>
           <Typography className={classes.check1} >{check5}</Typography>
           <TextField
-            className={classes.size}
-            name='question'
-            label="内容を入力"
-            variant="outlined"
-            multiline
-            rowsMax={4}
+            className={classes.size} name='question'
+            label="内容を入力" variant="outlined"
+            disabled={flagT} multiline rowsMax={4}
             value={values.question}
             onChange={handleChange('question')}
           />
@@ -364,7 +356,7 @@ const ParticipationComponent = () => {
         <p>受験意志</p>
           <Typography className={classes.check1} >{check6}</Typography>
           <Paper variant="outlined" className={classes.haikei1}>
-            <FormControl>
+            <FormControl disabled={flagT}>
               <RadioGroup row aria-label="gender" name="gender1" value={values.will} onChange={handleChange('will')}>
                 <FormControlLabel value="有り" control={<Radio />} label="有り" />
                 <FormControlLabel value="無し" control={<Radio />} label="無し" />
@@ -376,13 +368,9 @@ const ParticipationComponent = () => {
 
           <Typography className={classes.check1} >{check7}</Typography>
           <TextField
-            className={classes.size}
-            name='reason'
-            label="無しの場合、辞退理由"
-            variant="outlined"
-            disabled={loading}
-            multiline
-            rowsMax={4}
+            className={classes.size} name='reason'
+            label="無しの場合、辞退理由" variant="outlined"
+            disabled={loading || flagT} multiline rowsMax={4}
             value={values.reason}
             onChange={handleChange('reason')}
           />
@@ -390,22 +378,19 @@ const ParticipationComponent = () => {
         <p>訪問後の感想と後輩への助言</p>
           <Typography className={classes.check1} >{check8}</Typography>
           <TextField
-            className={classes.size}
-            name='impressions'
-            label="内容を入力"
-            variant="outlined"
-            multiline
-            rowsMax={4}
+            className={classes.size} name='impressions'
+            label="内容を入力" variant="outlined"
+            disabled={flagT} multiline rowsMax={4}
             value={values.impressions}
             onChange={handleChange('impressions')}
           />
 
         <br/><br/>
         <Button
-          className={classes.Rbutton}
-          variant="contained"
-          color="primary"
-          onClick={handleClickOpen}>
+          className={classes.Rbutton} variant="contained"
+          disabled={flagT} color="primary"
+          onClick={handleClickOpen}
+        >
           提出
         </Button>
 

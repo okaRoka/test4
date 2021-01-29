@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { log } from '../../slices/history';
+import { setUser, log } from '../../slices/history';
 
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -199,9 +199,11 @@ const ReportComponent = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user.userId);
+  const name = useSelector(state => state.auth.user.userName);
 
   const handleOnClickHistory = async (prop) => {
     await dispatch(log(userId, prop));
+    dispatch(setUser(name));
     history.push('/home/select/report/rHistory?page=' +prop);
   };
 

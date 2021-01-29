@@ -4,6 +4,7 @@ import { internApi, applicationApi, participationApi, examinationApi,
 
 const initialState = {
   data: null, // 情報の格納場所
+  user: "",
   oneData: null,
 };
 
@@ -13,6 +14,9 @@ const slice = createSlice({
   reducers: {
     setData: (state, action) => {
       return Object.assign({}, state, { data: action.payload });
+    },
+    setUser: (state, action) => {
+      return Object.assign({}, state, { user: action.payload });
     },
 
     setOneData: (state, action) => {
@@ -24,7 +28,7 @@ const slice = createSlice({
   }
 });
 
-export const { setOneData, initialOneData } = slice.actions;
+export const { setUser, setFlagT, setOneData, initialOneData } = slice.actions;
 
 export default slice.reducer;
 

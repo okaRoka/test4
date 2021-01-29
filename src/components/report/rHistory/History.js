@@ -24,10 +24,17 @@ const HistoryComponent = (prop) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const data = useSelector(state => state.history.data);
+  const user = useSelector(state => state.history.user);
+  const flagT = useSelector(state => state.auth.flagT);
 
   const handleOnClickList = (props) => {
     dispatch(setOneData(props));
-    history.push('/home/select/report/rSetDocument?page=' +prop.targetPage);
+    if(flagT) {
+      history.push('/home2/book/rSetDocument?page=' +prop.targetPage);
+    }
+    else {
+      history.push('/home/select/report/rSetDocument?page=' +prop.targetPage);
+    };
   };
 
   const msgs = () => {
@@ -52,7 +59,7 @@ const HistoryComponent = (prop) => {
                     </React.Fragment>
                   }
                 />
-                <Button variant="contained" color="primary" children="変更" />
+                <Button variant="contained" color="primary" children="確認" />
               </ListItem>
               <Divider variant="inset" component="li" />
             </List>
@@ -68,7 +75,7 @@ const HistoryComponent = (prop) => {
     <div className={classes.root}>
       <div className="centerTable">
         <div>
-          <h2>提出履歴</h2>
+          <h2>{user}／提出履歴</h2>
           {msgs()}
         </div>
       </div>

@@ -5,6 +5,7 @@ import {firebaseDb} from '../plugins/firebase';
 const initialState = {
   user: null, // ユーザー情報の格納場所
   flag: false,
+  flagT: false,
   hashed: "",
 };
 
@@ -17,6 +18,9 @@ const slice = createSlice({
     },
     setFlag: state => {
       return Object.assign({}, state, { flag: !state.flag });
+    },
+    setFlagT: (state, action) => {
+      return Object.assign({}, state, { flagT: action.payload });
     },
 
     passHash: (state, action) => {
@@ -34,7 +38,7 @@ const slice = createSlice({
   }
 });
 
-export const { setFlag, passHash, logout } = slice.actions;
+export const { setUser, setFlag, setFlagT, passHash, logout } = slice.actions;
 
 export default slice.reducer;
 
@@ -48,7 +52,7 @@ export function login(id, password) {
     
     if(user !== null) {
       // ログイン後にユーザー情報をストアに格納する
-      dispatch(slice.actions.setUser(user));
+      dispatch(setUser(user));
     }
     else {
       dispatch(setFlag());

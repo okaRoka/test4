@@ -7,7 +7,7 @@ import Settings from '../../components/settings/SettingsComponent';
 
 import BookContainer from '../book/BookContainer';
 import HistoryContainer from '../report/rHistory/HistoryContainer';
-import ConfirmContainer from '../book/bConfirm/ConfirmContainer';
+import SetDocumentContainer from '../report/rSetDocument/SetDocumentContainer';
 import LessContainer from '../less/LessContainer';
 
 import ChatContainer from '../talk/tChat/ChatContainer';
@@ -47,9 +47,9 @@ const Home2Container = () => {
           render={() => <HistoryContainer />}
         />
         <Route
-          path="/home2/book/bConfirm"
+          path="/home2/book/rSetDocument"
           exact
-          component={ConfirmContainer}
+          render={() => <SetDocumentContainer />}
         />
         <Route
           path="/home2/less"

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { login, passHash, setFlag } from '../../slices/auth';
+import { login, setFlag, setFlagT, passHash } from '../../slices/auth';
 import * as Colors from '@material-ui/core/colors';
 
 import Paper from '@material-ui/core/Paper';
@@ -102,9 +102,11 @@ const LoginComponent = () => {
     setLoading(false);
 
     if(str.slice(0, 2) === "00") {
+      dispatch(setFlagT(true));
       history.push('/home2');
     }
     else {
+      dispatch(setFlagT(false));
       history.push('/home');
     };
   };

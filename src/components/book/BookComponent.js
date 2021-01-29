@@ -2,11 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { log } from '../../slices/history';
+import { setUser, log } from '../../slices/history';
 
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -115,9 +114,6 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 10,
     },
   },
-  button: {
-    margin: theme.spacing(1),
-  },
   CS:{
     margin: theme.spacing(-1),
     padding: '10px 15px',
@@ -138,6 +134,7 @@ const BookComponent = () => {
 
   const handleOnClickHistory = async (props) => {
     await dispatch(log(props.user, props.page));
+    dispatch(setUser(props.name));
     history.push('/home2/book/rHistory?page=' +props.page);
   };
 
@@ -147,7 +144,13 @@ const BookComponent = () => {
         return (
           <div key={i}>
             <List>
-              <ListItem button onClick={() => handleOnClickHistory({user:m.user, page:1,})}>
+              <ListItem
+                button onClick={() => handleOnClickHistory({
+                  user:m.user,
+                  name:m.name,
+                  page:1,
+                })}
+              >
                 <ListItemText className={classes.CS}
                   primary={
                     <React.Fragment>
@@ -175,7 +178,13 @@ const BookComponent = () => {
         return (
           <div key={i}>
             <List>
-              <ListItem button onClick={() => handleOnClickHistory({user:m.user, page:2,})}>
+              <ListItem
+                button onClick={() => handleOnClickHistory({
+                  user:m.user,
+                  name:m.name,
+                  page:2,
+                })}
+              >
                 <ListItemText className={classes.CS}
                   primary={
                     <React.Fragment>
@@ -203,7 +212,13 @@ const BookComponent = () => {
         return (
           <div key={i}>
             <List>
-              <ListItem button onClick={() => handleOnClickHistory({user:m.user, page:3,})}>
+              <ListItem
+                button onClick={() => handleOnClickHistory({
+                  user:m.user,
+                  name:m.name,
+                  page:3,
+                })}
+              >
                 <ListItemText className={classes.CS}
                   primary={
                     <React.Fragment>
@@ -231,7 +246,13 @@ const BookComponent = () => {
         return (
           <div key={i}>
             <List>
-              <ListItem button onClick={() => handleOnClickHistory({user:m.user, page:4,})}>
+              <ListItem
+                button onClick={() => handleOnClickHistory({
+                  user:m.user,
+                  name:m.name,
+                  page:4,
+                })}
+              >
                 <ListItemText className={classes.CS}
                   primary={
                     <React.Fragment>
@@ -259,7 +280,13 @@ const BookComponent = () => {
         return (
           <div key={i}>
             <List>
-              <ListItem button onClick={() => handleOnClickHistory({user:m.user, page:5,})}>
+              <ListItem
+                button onClick={() => handleOnClickHistory({
+                  user:m.user,
+                  name:m.name,
+                  page:5,
+                })}
+              >
                 <ListItemText className={classes.CS}
                   primary={
                     <React.Fragment>
@@ -287,7 +314,13 @@ const BookComponent = () => {
         return (
           <div key={i}>
             <List>
-              <ListItem button onClick={() => handleOnClickHistory({user:m.user, page:6,})}>
+              <ListItem
+                button onClick={() => handleOnClickHistory({
+                  user:m.user,
+                  name:m.name,
+                  page:6,
+                })}
+              >
                 <ListItemText className={classes.CS}
                   primary={
                     <React.Fragment>
@@ -315,7 +348,13 @@ const BookComponent = () => {
         return (
           <div key={i}>
             <List>
-              <ListItem button onClick={() => handleOnClickHistory({user:m.user, page:7,})}>
+              <ListItem
+                button onClick={() => handleOnClickHistory({
+                  user:m.user,
+                  name:m.name,
+                  page:7,
+                })}
+              >
                 <ListItemText className={classes.CS}
                   primary={
                     <React.Fragment>
@@ -446,15 +485,6 @@ const BookComponent = () => {
               {Training()}
             </AccordionDetails>
           </Accordion>
-        </div>
-        <div>
-          <Button
-            className={classes.button}
-            variant="contained"
-            onClick={() => history.push('/home2/book/bConfirm')}
-          >
-            コンフィルムページ
-          </Button>
         </div>
       </div>
     </div>
