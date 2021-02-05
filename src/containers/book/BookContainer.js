@@ -9,7 +9,7 @@ const BookContainer = () => {
   }, []);
   return (
     <div>
-      <Header title="ブックページ" />
+      <Header title="書類管理" />
       <Book />
     </div>
   );
