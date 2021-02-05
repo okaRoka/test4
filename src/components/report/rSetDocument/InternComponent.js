@@ -54,7 +54,9 @@ const InternComponent = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user.userId);
   const name = useSelector(state => state.auth.user.userName);
+  const flagT = useSelector(state => state.auth.flagT);
   const oneData = useSelector(state => state.history.oneData);
+  const user = useSelector(state => state.history.user);
   const [flag, setFlag] = React.useState(true);
   // 初期化
   if(flag){
@@ -74,7 +76,7 @@ const InternComponent = () => {
   const [values, setValues] = React.useState({
     company: data.company, address: data.address,
     practice_start: data.practice_start, practice_end: data.practice_end,
-    practice: data.practice, impressions: data.impressions,
+    practice: data.practice, impressions: data.impressions, approval: data.approval,
   });
   const [open, setOpen] = React.useState(false);
 
@@ -141,15 +143,90 @@ const InternComponent = () => {
     setOpen(false);
   };
 
+  const formatText1 = () => {
+    if(flagT === false) {
+      return(
+          <div>
+            <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              提出
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              承認
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+
+        </div>
+      );
+    };
+  };
+
+  const time = new Date().getTime();
   const day = new Date().toLocaleString();
-  const today = (new Date().getTime()) * -1;
+  const today = time * -1;
   today.toLocaleString();
 
+  let approval = false;
+
   const handleOnClickI = () => {
-    const usersRef = firebaseDb.ref(userId +'r/intern');
-    const ref = firebaseDb.ref('report/intern/' +userId);
+    let id = userId;
+
+    if(flagT) {
+      id = user.user;
+      approval = true;
+    };
+    const Ref = firebaseDb.ref(id +'r/intern');
+    const ref = firebaseDb.ref('report/intern/' + id);
     if(keyIn === 0) {
-      usersRef.push({
+      const DayRef = Ref.child(time);
+      DayRef.set({
         "company" : values.company,
         "address" : values.address,
         "practice_start" : values.practice_start,
@@ -158,13 +235,15 @@ const InternComponent = () => {
         "impressions" : values.impressions,
         "today" : today,
         "day" : day,
+        "approval" : approval,
       });
-      ref.push({"company" : values.company});
+      const dayRef = ref.child(time);
+      dayRef.set({"company" : values.company});
       ref.update({"name" : name});
     }
     else {
       keyIn = 0;
-      const updateRef = usersRef.child(data.key);
+      const updateRef = Ref.child(data.key);
       const updRef = ref.child(data.key);
       updateRef.set({
         "company" : values.company,
@@ -175,12 +254,20 @@ const InternComponent = () => {
         "impressions" : values.impressions,
         "today" : today,
         "day" : day,
-        "name" : name,
+        "approval" : approval,
       });
       updRef.set({"company" : values.company});
+      if(flagT) {
+        updateRef.update({"approver" : name});
+      };
     };
-    alert('提出が完了しました。\n各種書類提出画面へ');
-    history.push('/home/select/report');
+    if(flagT === true) {
+      alert('承認が完了しました。');
+      history.push('/home2/book');
+    } else {
+      alert('提出が完了しました。\n各種書類提出画面へ');
+      history.push('/home/select/report');
+    }
   };
 
   return (
@@ -193,6 +280,7 @@ const InternComponent = () => {
             name='company'
             label="例）株式会社○○" 
             variant="outlined"
+            disabled={flagT}
             value={values.company}
             onChange={handleChange('company')}
           />
@@ -204,6 +292,7 @@ const InternComponent = () => {
             name='address'
             label="住所を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.address}
             onChange={handleChange('address')}
           />
@@ -214,6 +303,7 @@ const InternComponent = () => {
             className={classes.size1}
             name='practice_start'
             type="date"
+            disabled={flagT}
             value={values.practice_start}
             onChange={handleChange('practice_start')}
           />
@@ -222,6 +312,7 @@ const InternComponent = () => {
             className={classes.size1}
             name='practice_end'
             type="date"
+            disabled={flagT}
             value={values.practice_end}
             onChange={handleChange('practice_end')}
           />
@@ -233,6 +324,7 @@ const InternComponent = () => {
             name='practice'
             label="内容を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.practice}
             onChange={handleChange('practice')}
           />
@@ -244,31 +336,15 @@ const InternComponent = () => {
             name='impressions'
             label="感想を入力"
             variant="outlined"
+            disabled={flagT} 
             value={values.impressions}
             onChange={handleChange('impressions')}
           />
-        
-        <p>
-          <Button
-           className={classes.Rbutton} 
-           onClick={handleClickOpen}>提出</Button>
-        </p>
-        
-        <Dialog
-          open={open}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-          <DialogActions>
-            <Button onClick={handleOnClickI} color="primary">
-              はい
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              いいえ
-            </Button>
-          </DialogActions>
-        </Dialog>
+
+          <br></br>
+
+          {formatText1()}
+
       </div>
     </div>
   );

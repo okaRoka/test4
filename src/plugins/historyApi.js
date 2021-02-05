@@ -19,6 +19,7 @@ export const internApi = (id) => {
               'impressions' : m2.impressions,
               'day' : m2.day,
               'key': childSnapshot.key,
+              'approval' : m2.approval,
           });
         });
         resolve(data);
@@ -51,6 +52,7 @@ export const applicationApi = (id) => {
               'deadline' : m2.deadline,
               'day' : m2.day,
               'key': childSnapshot.key,
+              'approval' : m2.approval,
           });
         });
         resolve(data);
@@ -83,6 +85,7 @@ export const participationApi = (id) => {
               'impressions' : m2.impressions,
               'day' : m2.day,
               'key': childSnapshot.key,
+              'approval' : m2.approval,
           });
         });
         resolve(data);
@@ -130,6 +133,7 @@ export const examinationApi = (id) => {
               "select": m2.select,
               'day' : m2.day,
               'key': childSnapshot.key,
+              'approval' : m2.approval,
           });
         });
         resolve(data);
@@ -161,6 +165,7 @@ export const assessmentApi = (id) => {
               'remedy' : m2.remedy,
               'day' : m2.day,
               'key': childSnapshot.key,
+              'approval' : m2.approval,
           });
         });
         resolve(data);
@@ -206,6 +211,7 @@ export const offerApi = (id) => {
               'job_description' : m2.job_description,
               'day' : m2.day,
               'key': childSnapshot.key,
+              'approval' : m2.approval,
           });
         });
         resolve(data);
@@ -240,6 +246,7 @@ export const trainingApi = (id) => {
               'impressions' : m2.impressions,
               'day' : m2.day,
               'key': childSnapshot.key,
+              'approval' : m2.approval,
           });
         });
         resolve(data);

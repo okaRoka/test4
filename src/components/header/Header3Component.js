@@ -12,15 +12,10 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginRight: theme.spacing(5),
-    marginBottom: theme.spacing(2),
+    marginRight: theme.spacing(6),
   },
   appBar: {
     color: Colors.common.white,
-    height: 40,
-  },
-  button: {
-    marginBottom: theme.spacing(2),
   },
   offset: theme.mixins.toolbar,
 }));

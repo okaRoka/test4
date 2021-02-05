@@ -12,6 +12,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
 import DescriptionIcon from '@material-ui/icons/Description';
+import { green } from '@material-ui/core/colors';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +41,19 @@ const HistoryComponent = (prop) => {
 
   const msgs = () => {
     try {
-      return data.map((m, i) => {
+      return data.map((m, i) => {        
+        const checkApproval = () => {  
+          if(m.approval){
+            return(
+              <div>
+                <ListItemIcon>
+                  <CheckCircleOutlineIcon style={{ color: green[500] }} fontSize="large" />
+                </ListItemIcon>
+              </div>
+            );
+          };
+        };
+        
         return (
           <div key={i}>
             <List className={classes.root}>
@@ -59,10 +73,14 @@ const HistoryComponent = (prop) => {
                     </React.Fragment>
                   }
                 />
+                
+                {checkApproval()}
+              
                 <Button variant="contained" color="primary" children="確認" />
               </ListItem>
               <Divider variant="inset" component="li" />
             </List>
+
           </div>
         );
       });
@@ -75,7 +93,7 @@ const HistoryComponent = (prop) => {
     <div className={classes.root}>
       <div className="centerTable">
         <div>
-          <h2>{user}／提出履歴</h2>
+          <h2>{user.name}／提出履歴</h2>
           {msgs()}
         </div>
       </div>

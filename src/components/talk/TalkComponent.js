@@ -28,6 +28,8 @@ ref.on('child_added', (snapshot) => {
       'key': snapshot.key,
     });
   }
+  else if(key.slice(0, 2) === "01") {
+  }
   else {
     students.push({
       'userName' : m.userName,

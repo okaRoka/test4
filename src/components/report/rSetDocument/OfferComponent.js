@@ -98,7 +98,9 @@ const Offer1Component = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user.userId);
   const name = useSelector(state => state.auth.user.userName);
+  const flagT = useSelector(state => state.auth.flagT);
   const oneData = useSelector(state => state.history.oneData);
+  const user = useSelector(state => state.history.user);
   const [flag, setFlag] = React.useState(true);
   // 初期化
   if(flag){
@@ -134,7 +136,7 @@ const Offer1Component = () => {
     details: data.details, location: data.location,
     branch_name: data.branch_name, work_place: data.work_place,
     educational: data.educational, occupation: data.occupation,
-    job_description: data.job_description,
+    job_description: data.job_description, approval: data.approval,
   });
   const [open, setOpen] = React.useState(false);
 
@@ -351,15 +353,91 @@ const Offer1Component = () => {
     setOpen(false);
   };
 
+  const formatText1 = () => {
+    if(flagT === false) {
+      return(
+          <div>
+            <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              提出
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              承認
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+
+        </div>
+      );
+    };
+  };
+
+  const time = new Date().getTime();
   const day = new Date().toLocaleString();
-  const today = (new Date().getTime()) * -1;
+  const today = time * -1;
   today.toLocaleString();
 
+  let approval = false;
+
   const handleOnClickI = () => {
-    const usersRef = firebaseDb.ref(userId +'r/offer');
-    const ref = firebaseDb.ref('report/offer/' +userId);
+    let id = userId;
+
+    if(flagT) {
+      id = user.user;
+      approval = true;
+    };
+
+    const Ref = firebaseDb.ref(id +'r/offer');
+    const ref = firebaseDb.ref('report/offer/' + id);
     if(keyIn === 0) {
-      usersRef.push({
+      const DayRef = Ref.child(time);
+      DayRef.set({
         "company" : values.company,
         "president" : values.president,
         "position" : values.position,
@@ -383,13 +461,15 @@ const Offer1Component = () => {
         "job_description" : values.job_description,
         "today" : today,
         "day" : day,
+        "approval" : approval,
       });
-      ref.push({"company" : values.company});
+      const dayRef = ref.child(time);
+      dayRef.set({"company" : values.company});
       ref.update({"name" : name});
     }
     else {
       keyIn = 0;
-      const updateRef = usersRef.child(data.key);
+      const updateRef = Ref.child(data.key);
       const updRef = ref.child(data.key);
       updateRef.set({
         "company" : values.company,
@@ -415,12 +495,20 @@ const Offer1Component = () => {
         "job_description" : values.job_description,
         "today" : today,
         "day" : day,
-        "name" : name,
+        "approval" : approval,
       });
       updRef.set({"company" : values.company});
+      if(flagT) {
+        updateRef.update({"approver" : name});
+      };
     };
-    alert('提出が完了しました。\n内定関係画面へ');
-    history.push('/home/select/report');
+    if(flagT === true) {
+      alert('承認が完了しました。');
+      history.push('/home2/book');
+    } else {
+      alert('提出が完了しました。\n各種書類提出画面へ');
+      history.push('/home/select/report');
+    }
   };
 
   return (
@@ -433,6 +521,7 @@ const Offer1Component = () => {
             name='company'
             label="例）株式会社○○" 
             variant="outlined"
+            disabled={flagT}
             value={values.company}
             onChange={handleChange('company')}
           />
@@ -444,6 +533,7 @@ const Offer1Component = () => {
             name='president'
             label="例）情報　太郎" 
             variant="outlined"
+            disabled={flagT}
             value={values.president}
             onChange={handleChange('president')}
           />
@@ -455,6 +545,7 @@ const Offer1Component = () => {
             name='position'
             label="例）代表取締役" 
             variant="outlined"
+            disabled={flagT}
             value={values.position}
             onChange={handleChange('position')}
           />
@@ -467,6 +558,7 @@ const Offer1Component = () => {
             type="number"
             label="郵便番号を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.postal_code}
             onChange={handleChange('postal_code')}
           />
@@ -478,6 +570,7 @@ const Offer1Component = () => {
             name='address'
             label="住所を入力" 
             variant="outlined"
+            disabled={flagT}
             value={values.address}
             onChange={handleChange('address')}
           />
@@ -490,6 +583,7 @@ const Offer1Component = () => {
             type="number"
             label="電話番号を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.phone_number}
             onChange={handleChange('phone_number')}
           />
@@ -502,6 +596,7 @@ const Offer1Component = () => {
             type="number"
             label="FAXを入力"
             variant="outlined"
+            disabled={flagT}
             value={values.fax_number}
             onChange={handleChange('fax_number')}
           />
@@ -513,6 +608,7 @@ const Offer1Component = () => {
             name='business'
             label="例）システム開発" 
             variant="outlined"
+            disabled={flagT}
             value={values.business}
             onChange={handleChange('business')}
           />
@@ -524,6 +620,7 @@ const Offer1Component = () => {
               <NativeSelect
               value={values.section}
               open={open}
+              disabled={flagT}
               onChange={handleChange('section')}
               input={<BootstrapInput />}
               >
@@ -548,6 +645,7 @@ const Offer1Component = () => {
             label="資本金を入力"
             type="number"
             variant="outlined"
+            disabled={flagT}
             value={values.capital}
             onChange={handleChange('capital')}
             InputProps={{
@@ -563,6 +661,7 @@ const Offer1Component = () => {
             label="年商を入力"
             type="number"
             variant="outlined"
+            disabled={flagT}
             value={values.sales}
             onChange={handleChange('sales')}
             InputProps={{
@@ -578,6 +677,7 @@ const Offer1Component = () => {
             label="従業員数を入力"
             type="number"
             variant="outlined"
+            disabled={flagT}
             value={values.employees}
             onChange={handleChange('employees')}
             InputProps={{
@@ -592,6 +692,7 @@ const Offer1Component = () => {
               <NativeSelect
               value={values.industry}
               open={open}
+              disabled={flagT}
               onChange={handleChange('industry')}
               input={<BootstrapInput />}
               >
@@ -621,6 +722,7 @@ const Offer1Component = () => {
               <NativeSelect
               value={values.activity}
               open={open}
+              disabled={flagT}
               onChange={handleChange('activity')}
               input={<BootstrapInput />}
               >
@@ -639,7 +741,7 @@ const Offer1Component = () => {
             name='details'
             label="詳細を入力" 
             variant="outlined"
-            disabled={loading}
+            disabled={loading || flagT}
             value={values.details}
             onChange={handleChange('details')}
           />
@@ -650,9 +752,9 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check16}</Typography>
           <Paper variant="outlined" className={classes.haikei}>
             <FormControl>
-              <RadioGroup row aria-label="gender" name="gender1" value={values.location} onChange={handleChange('location')}>
-                <FormControlLabel value="本社" control={<Radio />} label="本社" />
-                <FormControlLabel value="支社" control={<Radio />} label="支社" />
+              <RadioGroup row aria-label="gender" name="gender1"  value={values.location} onChange={handleChange('location')}>
+                <FormControlLabel value="本社" control={<Radio />} label="本社" disabled={flagT} />
+                <FormControlLabel value="支社" control={<Radio />} label="支社" disabled={flagT} />
               </RadioGroup>
             </FormControl>
           </Paper>
@@ -663,7 +765,7 @@ const Offer1Component = () => {
             name='branch_name'
             label="支店名を入力" 
             variant="outlined"
-            disabled={loading2}
+            disabled={loading2 || flagT}
             value={values.branch_name}
             onChange={handleChange('branch_name')}
           />
@@ -675,6 +777,7 @@ const Offer1Component = () => {
             name='work_place'
             label="勤務地を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.work_place}
             onChange={handleChange('work_place')}
           />
@@ -686,6 +789,7 @@ const Offer1Component = () => {
               <NativeSelect
               value={values.educational}
               open={open}
+              disabled={flagT}
               onChange={handleChange('educational')}
               input={<BootstrapInput />}
               >
@@ -704,6 +808,7 @@ const Offer1Component = () => {
               <NativeSelect
               value={values.occupation}
               open={open}
+              disabled={flagT}
               onChange={handleChange('occupation')}
               input={<BootstrapInput />}
               >
@@ -727,36 +832,17 @@ const Offer1Component = () => {
             name='job_description'
             label="内容を入力"
             variant="outlined"
+            disabled={flagT}
             multiline
             rowsMax={4}
             value={values.job_description}
             onChange={handleChange('job_description')}
           />
 
-        <br/><br/>
-        <Button 
-          className={classes.Rbutton}
-          variant="contained"
-          onClick={handleClickOpen}
-          >
-          提出
-        </Button>
+          <br></br>
 
-        <Dialog
-          open={open}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-          <DialogActions>
-            <Button onClick={handleOnClickI} color="primary">
-              はい
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              いいえ
-            </Button>
-          </DialogActions>
-        </Dialog>
+          {formatText1()}
+
       </div>
     </div>
   );

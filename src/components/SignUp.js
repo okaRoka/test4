@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { signUp, passHash } from '../slices/auth';
@@ -17,30 +16,31 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
 import IconButton from '@material-ui/core/IconButton';
-import CameraAltIcon from '@material-ui/icons/CameraAlt';
-import ExitToApp from '@material-ui/icons/ExitToApp';
 
 import tileData from '../images/PlofileImage';
+import Header from './header/Header3Component';
 
 let counter = 0;
 
 const useStyles = makeStyles((theme) => ({
-  root1: {
+  root: {
     '& > *': {
-      margin: theme.spacing(-1),
+      margin: 'auto',
+      marginTop: theme.spacing(2),
       width: '35ch',
     },
-  },
-  root2: {
-    marginRight: theme.spacing(40),
   },
   button: {
     padding: theme.spacing(1),
     margin: theme.spacing(2),
+    marginLeft: theme.spacing(6),
     color: Colors.common.white,
   },
   typography: {
     fontSize: 20,
+  },
+  avatar: {
+    marginRight: theme.spacing(5),
   },
   gridList: {
     width: 240,
@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUpComponent = () => {
   const classes = useStyles();
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
@@ -63,7 +62,6 @@ const SignUpComponent = () => {
     username: '',
     imageURL: '',
   });
-  console.log(values.imageURL);
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -127,103 +125,94 @@ const SignUpComponent = () => {
   return (
     <div >
       <div className="centerTable">
-        <h2>
-          サインアップ
-        </h2>
-        <div style={{textAlign:'center'}}>
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-username">IDを入力</InputLabel>
-            <OutlinedInput
-                id="outlined-username" type={'text'}
-                value={values.id} onChange={handleChange('id')}
-                labelWidth={70}
-            />
-          </FormControl>
-          <br />
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-password">PWを入力</InputLabel>
-            <OutlinedInput
-                id="outlined-password" type={'text'}
-                value={values.password} onChange={handleChange('password')}
-                labelWidth={70}
-            />
-          </FormControl>
-          <br />
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-password">ユーザー名</InputLabel>
-            <OutlinedInput
-                id="outlined-password" type={'text'}
-                value={values.username} onChange={handleChange('username')}
-                labelWidth={70}
-            />
-          </FormControl>
-          <br />
-          <IconButton onClick={() => setOpen(true)}>
-            <Typography
-              children="アイコン画面選択　"
-              className={classes.typography}
-            />
-            <CameraAltIcon/>
-          </IconButton>
-          <br />
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            onClick={() => handleOnClickSignUp()}
-          >
-            サインアップ
-          </Button>
-        </div>
+        <div className={classes.root}>
+          <div>
+            <Header title="サインアップ" />
+          </div>
+          <div>
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-username">IDを入力</InputLabel>
+              <OutlinedInput
+                  id="outlined-username" type={'text'}
+                  value={values.id} onChange={handleChange('id')}
+                  labelWidth={70}
+              />
+            </FormControl>
+            <br />
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-password">PWを入力</InputLabel>
+              <OutlinedInput
+                  id="outlined-password" type={'text'}
+                  value={values.password} onChange={handleChange('password')}
+                  labelWidth={70}
+              />
+            </FormControl>
+            <br />
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-password">ユーザー名</InputLabel>
+              <OutlinedInput
+                  id="outlined-password" type={'text'}
+                  value={values.username} onChange={handleChange('username')}
+                  labelWidth={70}
+              />
+            </FormControl>
+            <br />
+            <IconButton onClick={() => setOpen(true)}>
+              <Typography
+                children="アイコン画面選択　"
+                className={classes.typography}
+              />
+              <Avatar className={classes.avatar} src={values.imageURL} />
+            </IconButton>
+            <br />
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={() => handleOnClickSignUp()}
+            >
+              サインアップ
+            </Button>
+          </div>
 
-        <input
-          type="file" accept="image/*"
-          style={{ display: "none" }}
-          id="photo"
-          onChange={handleCC}
-        />
-        <Dialog
-          open={open} onClose={() => setOpen(false)}
-          aria-labelledby="photo-dialog-title"
-          aria-describedby="photo-dialog-description"
-        >
-          <DialogTitle id="photo-dialog-title">{"アイコン画像を選択して"}</DialogTitle>
-          <DialogContent>
-            <GridList cellHeight={80} className={classes.gridList} cols={3}>
-              {tileData.map((tile) => (
-                <GridListTile key={tile.img} onClick={handleCD}>
-                  <Avatar className={classes.large} src={tile.img} alt={tile.title} />
-                </GridListTile>
-              ))}
-            </GridList>
-          </DialogContent>
-          <DialogActions>
-            <label htmlFor="photo">
+          <input
+            type="file" accept="image/*"
+            style={{ display: "none" }}
+            id="photo"
+            onChange={handleCC}
+          />
+          <Dialog
+            open={open} onClose={() => setOpen(false)}
+            aria-labelledby="photo-dialog-title"
+            aria-describedby="photo-dialog-description"
+          >
+            <DialogTitle id="photo-dialog-title">{"アイコン画像を選択して"}</DialogTitle>
+            <DialogContent>
+              <GridList cellHeight={80} className={classes.gridList} cols={3}>
+                {tileData.map((tile) => (
+                  <GridListTile key={tile.img} onClick={handleCD}>
+                    <Avatar className={classes.large} src={tile.img} alt={tile.title} />
+                  </GridListTile>
+                ))}
+              </GridList>
+            </DialogContent>
+            <DialogActions>
+              <label htmlFor="photo">
+                <Button
+                  variant="contained" color="primary"
+                  component="span" children="カスタム選択"
+                />
+              </label>
+              <Avatar src={values.imageURL} />
               <Button
                 variant="contained" color="primary"
-                component="span" children="カスタム選択"
-              />
-            </label>
-            <Avatar src={values.imageURL} />
-            <Button
-              variant="contained" color="primary"
-              onClick={() => setOpen(false)}
-            >
-              閉じる
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-        <br/><br/>
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          startIcon={<ExitToApp />}
-          onClick={() => (history.goBack())}
-        >
-          戻る
-        </Button>
+                onClick={() => setOpen(false)}
+              >
+                閉じる
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     </div>
   );

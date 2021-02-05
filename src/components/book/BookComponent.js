@@ -108,10 +108,10 @@ ref.child('training').on('child_added', (snapshot) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: 20,
     [theme.breakpoints.up('md')]: {
-      marginLeft: 110,
-      marginRight: 10,
+      marginLeft: 220,
+      marginRight: 20,
     },
   },
   CS:{
@@ -134,7 +134,7 @@ const BookComponent = () => {
 
   const handleOnClickHistory = async (props) => {
     await dispatch(log(props.user, props.page));
-    dispatch(setUser(props.name));
+    dispatch(setUser({name: props.name, user: props.user}));
     history.push('/home2/book/rHistory?page=' +props.page);
   };
 
@@ -380,112 +380,110 @@ const BookComponent = () => {
   return (
     <div className={classes.root}>
       <div className="centerTable">
-        <div className={classes.root}>
-          <Accordion className={classes.tl}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography
-                component="span" color="textPrimary" children="インターンシップ-Intern"
-              />
-            </AccordionSummary>
-            <AccordionDetails style={{flexWrap: 'wrap'}}>
-              {Intern()}
-            </AccordionDetails>
-          </Accordion>
-          <div />
-          <Accordion className={classes.tl}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography
-                component="span" color="textPrimary" children="各書類申請書-Application"
-              />
-            </AccordionSummary>
-            <AccordionDetails style={{flexWrap: 'wrap'}}>
-              {Application()}
-            </AccordionDetails>
-          </Accordion>
-          <div />
-          <Accordion className={classes.tl}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography
-                component="span" color="textPrimary" children="参加報告書-Participation"
-              />
-            </AccordionSummary>
-            <AccordionDetails style={{flexWrap: 'wrap'}}>
-              {Participation()}
-            </AccordionDetails>
-          </Accordion>
-          <div />
-          <Accordion className={classes.tl}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography
-                component="span" color="textPrimary" children="受験報告書-Examination"
-              />
-            </AccordionSummary>
-            <AccordionDetails style={{flexWrap: 'wrap'}}>
-              {Examination()}
-            </AccordionDetails>
-          </Accordion>
-          <div />
-          <Accordion className={classes.tl}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography
-                component="span" color="textPrimary" children="自己評価シート-Assessment"
-              />
-            </AccordionSummary>
-            <AccordionDetails style={{flexWrap: 'wrap'}}>
-              {Assessment()}
-            </AccordionDetails>
-          </Accordion>
-          <div />
-          <Accordion className={classes.tl}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography
-                component="span" color="textPrimary" children="内定報告書-Offer"
-              />
-            </AccordionSummary>
-            <AccordionDetails style={{flexWrap: 'wrap'}}>
-              {Offer()}
-            </AccordionDetails>
-          </Accordion>
-          <div />
-          <Accordion className={classes.tl}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography
-                component="span" color="textPrimary" children="内定研修参加報告書-Training"
-              />
-            </AccordionSummary>
-            <AccordionDetails style={{flexWrap: 'wrap'}}>
-              {Training()}
-            </AccordionDetails>
-          </Accordion>
-        </div>
+        <Accordion className={classes.tl}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography
+              component="span" color="textPrimary" children="インターンシップ-Intern"
+            />
+          </AccordionSummary>
+          <AccordionDetails style={{flexWrap: 'wrap'}}>
+            {Intern()}
+          </AccordionDetails>
+        </Accordion>
+        <div />
+        <Accordion className={classes.tl}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography
+              component="span" color="textPrimary" children="各書類申請書-Application"
+            />
+          </AccordionSummary>
+          <AccordionDetails style={{flexWrap: 'wrap'}}>
+            {Application()}
+          </AccordionDetails>
+        </Accordion>
+        <div />
+        <Accordion className={classes.tl}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography
+              component="span" color="textPrimary" children="参加報告書-Participation"
+            />
+          </AccordionSummary>
+          <AccordionDetails style={{flexWrap: 'wrap'}}>
+            {Participation()}
+          </AccordionDetails>
+        </Accordion>
+        <div />
+        <Accordion className={classes.tl}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography
+              component="span" color="textPrimary" children="受験報告書-Examination"
+            />
+          </AccordionSummary>
+          <AccordionDetails style={{flexWrap: 'wrap'}}>
+            {Examination()}
+          </AccordionDetails>
+        </Accordion>
+        <div />
+        <Accordion className={classes.tl}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography
+              component="span" color="textPrimary" children="自己評価シート-Assessment"
+            />
+          </AccordionSummary>
+          <AccordionDetails style={{flexWrap: 'wrap'}}>
+            {Assessment()}
+          </AccordionDetails>
+        </Accordion>
+        <div />
+        <Accordion className={classes.tl}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography
+              component="span" color="textPrimary" children="内定報告書-Offer"
+            />
+          </AccordionSummary>
+          <AccordionDetails style={{flexWrap: 'wrap'}}>
+            {Offer()}
+          </AccordionDetails>
+        </Accordion>
+        <div />
+        <Accordion className={classes.tl}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography
+              component="span" color="textPrimary" children="内定研修参加報告書-Training"
+            />
+          </AccordionSummary>
+          <AccordionDetails style={{flexWrap: 'wrap'}}>
+            {Training()}
+          </AccordionDetails>
+        </Accordion>
       </div>
     </div>
   );

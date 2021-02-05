@@ -57,6 +57,11 @@ const AppContainer = () => {
                   component={Home2Container}
                 />
                 <Route
+                  path="/SignUp"
+                  exact
+                  component={Home2Container} 
+                />
+                <Route
                   path="/counter"
                   exact
                   render={() => <CounterContainer />}

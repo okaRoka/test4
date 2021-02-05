@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginApi } from '../plugins/authApi';
+import { loginApi, approvalApi } from '../plugins/authApi';
 import {firebaseDb} from '../plugins/firebase';
 
 const initialState = {
@@ -38,21 +38,34 @@ const slice = createSlice({
   }
 });
 
-export const { setUser, setFlag, setFlagT, passHash, logout } = slice.actions;
+export const { setFlag, setFlagT, passHash, logout } = slice.actions;
 
 export default slice.reducer;
 
-// 認証済みか確認するセレクター
+// ログイン済みか確認するセレクター
 export const isAuthSelector = state => state.auth.user !== null;
 
 // ログイン機能
 export function login(id, password) {
   return async function(dispatch) {
     const user = await loginApi(id, password);  // 終わるまで待機
-    
     if(user !== null) {
       // ログイン後にユーザー情報をストアに格納する
-      dispatch(setUser(user));
+      dispatch(slice.actions.setUser(user));
+    }
+    else {
+      dispatch(setFlag());
+    };
+  };
+};
+
+// 認証機能
+export function approval(id, password) {
+  return async function(dispatch) {
+    const user = await approvalApi(id, password);  // 終わるまで待機
+    if(user !== null) {
+      // 認証後に値を返す
+      return user;
     }
     else {
       dispatch(setFlag());

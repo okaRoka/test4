@@ -58,7 +58,9 @@ const TrainingComponent = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user.userId);
   const name = useSelector(state => state.auth.user.userName);
+  const flagT = useSelector(state => state.auth.flagT);
   const oneData = useSelector(state => state.history.oneData);
+  const user = useSelector(state => state.history.user);
   const [flag, setFlag] = React.useState(true);
   // 初期化
   if(flag){
@@ -82,7 +84,7 @@ const TrainingComponent = () => {
     facility: data.facility, address: data.address,
     training_start: data.training_start, training_end: data.training_end,
     time_start: data.time_start, time_end: data.time_end,
-    detail: data.detail, impressions: data.impressions,
+    detail: data.detail, impressions: data.impressions, approval: data.approval,
   });
   const [open, setOpen] = React.useState(false);
 
@@ -180,15 +182,91 @@ const TrainingComponent = () => {
     setOpen(false);
   };
 
+  const formatText1 = () => {
+    if(flagT === false) {
+      return(
+          <div>
+            <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              提出
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              承認
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+
+        </div>
+      );
+    };
+  };
+
+  const time = new Date().getTime();
   const day = new Date().toLocaleString();
-  const today = (new Date().getTime()) * -1;
+  const today = time * -1;
   today.toLocaleString();
 
+  let approval = false;
+
   const handleOnClickI = () => {
-    const usersRef = firebaseDb.ref(userId +'r/training');
-    const ref = firebaseDb.ref('report/training/' +userId);
+    let id = userId;
+
+    if(flagT) {
+      id = user.user;
+      approval = true;
+    };
+
+    const Ref = firebaseDb.ref(id +'r/training');
+    const ref = firebaseDb.ref('report/training/' + id);
     if(keyIn === 0) {
-      usersRef.push({
+      const DayRef = Ref.child(time);
+      DayRef.set({
         "company" : values.company,
         "location" : values.location,
         "facility" : values.facility,
@@ -201,13 +279,15 @@ const TrainingComponent = () => {
         "impressions" : values.impressions,
         "today" : today,
         "day" : day,
+        "approval" : approval,
       });
-      ref.push({"company" : values.company});
+      const dayRef = ref.child(time);
+      dayRef.set({"company" : values.company});
       ref.update({"name" : name});
     }
     else {
       keyIn = 0;
-      const updateRef = usersRef.child(data.key);
+      const updateRef = Ref.child(data.key);
       const updRef = ref.child(data.key);
       updateRef.set({
         "company" : values.company,
@@ -222,12 +302,20 @@ const TrainingComponent = () => {
         "impressions" : values.impressions,
         "today" : today,
         "day" : day,
-        "name" : name,
+        "approval" : approval,
       });
       updRef.set({"company" : values.company});
+      if(flagT) {
+        updateRef.update({"approver" : name});
+      };
     };
-    alert('提出が完了しました。\n内定関係画面へ');
-    history.push('/home/select/report');
+    if(flagT === true) {
+      alert('承認が完了しました。');
+      history.push('/home2/book');
+    } else {
+      alert('提出が完了しました。\n各種書類提出画面へ');
+      history.push('/home/select/report');
+    }
   };
 
   return (
@@ -240,6 +328,7 @@ const TrainingComponent = () => {
             name='company'
             label="例）株式会社○○" 
             variant="outlined"
+            disabled={flagT}
             value={values.company}
             onChange={handleChange('company')}
           />
@@ -250,9 +339,9 @@ const TrainingComponent = () => {
           <Paper variant="outlined" className={classes.haikei}>
             <FormControl>
               <RadioGroup row　aria-label="gender" name="gender1" value={values.location} onChange={handleChange('location')}>
-                <FormControlLabel value="本社" control={<Radio />} label="本社" />
-                <FormControlLabel value="支社" control={<Radio />} label="支社" />
-                <FormControlLabel value="別会場" control={<Radio/>} label="別会場" />
+                <FormControlLabel value="本社" disabled={flagT} control={<Radio />} label="本社" />
+                <FormControlLabel value="支社" disabled={flagT} control={<Radio />} label="支社" />
+                <FormControlLabel value="別会場" disabled={flagT} control={<Radio/>} label="別会場" />
               </RadioGroup>
             </FormControl>
           </Paper>
@@ -264,6 +353,7 @@ const TrainingComponent = () => {
             name='facility'
             label="研修施設名を入力" 
             variant="outlined"
+            disabled={flagT}
             value={values.facility}
             onChange={handleChange('facility')}
           />
@@ -275,6 +365,7 @@ const TrainingComponent = () => {
             name='address'
             label="住所を入力" 
             variant="outlined"
+            disabled={flagT}
             value={values.address}
             onChange={handleChange('address')}
           />
@@ -285,6 +376,7 @@ const TrainingComponent = () => {
             className={classes.size1}
             name='training_start'
             type="date"
+            disabled={flagT}
             value={values.training_start}
             onChange={handleChange('training_start')}
           />
@@ -293,6 +385,7 @@ const TrainingComponent = () => {
             className={classes.size1}
             name='training_end'
             type="date"
+            disabled={flagT}
             value={values.training_end}
             onChange={handleChange('training_end')}
           />
@@ -303,6 +396,7 @@ const TrainingComponent = () => {
             className={classes.size1}
             name='time_start'
             type="time"
+            disabled={flagT}
             value={values.time_start}
             onChange={handleChange('time_start')}
           />
@@ -311,6 +405,7 @@ const TrainingComponent = () => {
             className={classes.size1}
             name='time_end'
             type="time"
+            disabled={flagT}
             value={values.time_end}
             onChange={handleChange('time_end')}
           />
@@ -322,6 +417,7 @@ const TrainingComponent = () => {
             name='detail'
             label="内容について入力" 
             variant="outlined"
+            disabled={flagT}
             multiline
             rowsMax={4}
             value={values.detail}
@@ -335,35 +431,17 @@ const TrainingComponent = () => {
             name='impressions'
             label="感想を入力" 
             variant="outlined"
+            disabled={flagT}
             multiline
             rowsMax={4}
             value={values.impressions}
             onChange={handleChange('impressions')}
           />
 
-        <br/><br/>
-        <Button 
-          className={classes.Rbutton}
-          variant="contained"
-          onClick={handleClickOpen}>
-          提出
-        </Button>
+          <br></br>
 
-        <Dialog
-          open={open}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-          <DialogActions>
-            <Button onClick={handleOnClickI} color="primary">
-              はい
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              いいえ
-            </Button>
-          </DialogActions>
-        </Dialog>
+          {formatText1()}
+
       </div>
     </div>
   );

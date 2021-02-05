@@ -108,7 +108,9 @@ const ApplicationComponent = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user.userId);
   const name = useSelector(state => state.auth.user.userName);
+  const flagT = useSelector(state => state.auth.flagT);
   const oneData = useSelector(state => state.history.oneData);
+  const user = useSelector(state => state.history.user);
   const [flag, setFlag] = React.useState(true);
   // 初期化
   if(flag){
@@ -161,7 +163,7 @@ const ApplicationComponent = () => {
     company: data.company, address: data.address,
     practice_start: data.practice_start, practice_end: data.practice_end,
     activity: data.activity, contents: data.contents,
-    submissions: data.submissions, deadline: data.deadline,
+    submissions: data.submissions, deadline: data.deadline, approval: data.approval,
   });
   const [states, setState] = React.useState({
     checkedA: check.checkedA, checkedB: check.checkedB,
@@ -237,6 +239,71 @@ const ApplicationComponent = () => {
     }
     setValues({ ...values, submissions: num2 });
   };
+
+  const formatText1 = () => {
+    if(flagT === false) {
+      return(
+          <div>
+            <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              提出
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              承認
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+
+        </div>
+      );
+    };
+  };
   
   const handleClickOpen = () => {
     let cnt = 0;
@@ -279,16 +346,26 @@ const ApplicationComponent = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  
+  const time = new Date().getTime();
   const day = new Date().toLocaleString();
-  const today = (new Date().getTime()) * -1;
+  const today = time * -1;
   today.toLocaleString();
 
+  let approval = false;
+
   const handleOnClickI = () => {
-    const usersRef = firebaseDb.ref(userId +'r/application');
-    const ref = firebaseDb.ref('report/application/' +userId);
+    let id = userId;
+
+    if(flagT) {
+      id = user.user;
+      approval = true;
+    };
+    const Ref = firebaseDb.ref(id +'r/application');
+    const ref = firebaseDb.ref('report/application/' + id);
     if(keyIn === 0) {
-      usersRef.push({
+      const DayRef = Ref.child(time);
+      DayRef.set({
         "company" : values.company,
         "address" : values.address,
         "practice_start" : values.practice_start,
@@ -299,13 +376,15 @@ const ApplicationComponent = () => {
         "deadline" : values.deadline,
         "today" : today,
         "day" : day,
+        "approval" : approval,
       });
-      ref.push({"company" : values.company});
+      const dayRef = ref.child(time);
+      dayRef.set({"company" : values.company});
       ref.update({"name" : name});
     }
     else {
       keyIn = 0;
-      const updateRef = usersRef.child(data.key);
+      const updateRef = Ref.child(data.key);
       const updRef = ref.child(data.key);
       updateRef.set({
         "company" : values.company,
@@ -318,14 +397,23 @@ const ApplicationComponent = () => {
         "deadline" : values.deadline,
         "today" : today,
         "day" : day,
-        "name" : name,
+        "approval" : approval,
       });
       updRef.set({"company" : values.company});
+      if(flagT) {
+        updateRef.update({"approver" : name});
+      };
     };
     num1 = 1;
     num2 = 1;
-    alert('提出が完了しました。\n各種書類提出画面へ');
-    history.push('/home/select/report');
+    
+    if(flagT === true) {
+      alert('承認が完了しました。');
+      history.push('/home2/book');
+    } else {
+      alert('提出が完了しました。\n各種書類提出画面へ');
+      history.push('/home/select/report');
+    }
   };
 
   return (
@@ -338,6 +426,7 @@ const ApplicationComponent = () => {
             name='company'
             label="例）株式会社○○" 
             variant="outlined"
+            disabled={flagT}
             value={values.company}
             onChange={handleChange('company')}
           />
@@ -348,7 +437,8 @@ const ApplicationComponent = () => {
             className={classes.size}
             label="住所を入力" 
             variant="outlined"
-            name='address' 
+            name='address'
+            disabled={flagT} 
             value={values.address}
             onChange={handleChange('address')}
           />
@@ -359,6 +449,7 @@ const ApplicationComponent = () => {
             className={classes.size1}
             name='practice_start'
             type="date"
+            disabled={flagT}
             value={values.practice_start}
             onChange={handleChange('practice_start')}
           />
@@ -367,6 +458,7 @@ const ApplicationComponent = () => {
             className={classes.size1}
             name='practice_end'
             type="date"
+            disabled={flagT}
             value={values.practice_end}
             onChange={handleChange('practice_end')}
           />
@@ -376,6 +468,7 @@ const ApplicationComponent = () => {
           <FormControl className={classes.size} variant="outlined">
             <InputLabel htmlFor="select">活動方法</InputLabel>
             <NativeSelect
+              disabled={flagT}
               value={values.activity}
               open={open}
               onChange={handleChange('activity')}
@@ -396,25 +489,25 @@ const ApplicationComponent = () => {
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedA} onChange={handleChangeChecked}
+                    checked={states.checkedA} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedA" value={2} onClick={handleChange_check1} />}
                   label="会社説明"
                 />
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedB} onChange={handleChangeChecked}
+                    checked={states.checkedB} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedB" value={3} onClick={handleChange_check1} />} 
                   label="会社見学" 
                 />
                 <FormControlLabel 
                   control={<Checkbox 
-                    checked={states.checkedC} onChange={handleChangeChecked} 
+                    checked={states.checkedC} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedC" value={5} onClick={handleChange_check1} />}
                   label="作文" 
                 />
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedD} onChange={handleChangeChecked}
+                    checked={states.checkedD} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedD" value={7} onClick={handleChange_check1} />} 
                   label="筆記試験" 
                 />
@@ -424,25 +517,25 @@ const ApplicationComponent = () => {
               <FormGroup >
                 <FormControlLabel 
                   control={<Checkbox 
-                    checked={states.checkedE} onChange={handleChangeChecked} 
+                    checked={states.checkedE} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedE" value={11} onClick={handleChange_check1} />} 
                   label="一次面接"
                 />
                 <FormControlLabel 
                   control={<Checkbox 
-                    checked={states.checkedF} onChange={handleChangeChecked} 
+                    checked={states.checkedF} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedF" value={13} onClick={handleChange_check1} />} 
                   label="二次面接" 
                 />
                 <FormControlLabel 
                   control={<Checkbox
-                    checked={states.checkedG} onChange={handleChangeChecked} 
+                    checked={states.checkedG} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedG" value={17} onClick={handleChange_check1} />} 
                   label="最終面接" 
                 />
                 <FormControlLabel 
                   control={<Checkbox
-                    checked={states.checkedH} onChange={handleChangeChecked} 
+                    checked={states.checkedH} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedH" value={19} onClick={handleChange_check1} />} 
                   label="その他"
                 />  
@@ -457,19 +550,19 @@ const ApplicationComponent = () => {
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedA2} onChange={handleChangeChecked}
+                    checked={states.checkedA2} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedA2" value={2}  onClick={handleChange_check2} />}
                   label="履歴書"
                 />
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedB2} onChange={handleChangeChecked}
+                    checked={states.checkedB2} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedB2" value={3}  onClick={handleChange_check2} />}
                   label="成績証明書"
                 />
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedC2} onChange={handleChangeChecked} 
+                    checked={states.checkedC2} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedC2" value={5}  onClick={handleChange_check2} />}
                   label="健康診断書"
                 />
@@ -479,19 +572,19 @@ const ApplicationComponent = () => {
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedD2} onChange={handleChangeChecked}
+                    checked={states.checkedD2} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedD2" value={7}  onClick={handleChange_check2} />}
                   label="卒業見込証明書"
                 />
                 <FormControlLabel
                   control={<Checkbox 
-                    checked={states.checkedE2} onChange={handleChangeChecked} 
+                    checked={states.checkedE2} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedE2" value={11} onClick={handleChange_check2} />}
                   label="エントリーシート"
                 />
                 <FormControlLabel
                   control={<Checkbox 
-                    checked={states.checkedF2} onChange={handleChangeChecked} 
+                    checked={states.checkedF2} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedF2" value={13} onClick={handleChange_check2} />}
                   label="その他"
                 />
@@ -506,35 +599,15 @@ const ApplicationComponent = () => {
             name='deadline'
             type="date"
             variant="outlined"
+            disabled={flagT}
             value={values.deadline}
             onChange={handleChange('deadline')}
           />
         
         <br/><br/>
-        <Button 
-          className={classes.Rbutton}
-          variant="contained"
-          color="primary"
-          onClick={handleClickOpen}
-        >
-          提出
-        </Button>
 
-        <Dialog
-          open={open}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-          <DialogActions>
-            <Button onClick={handleOnClickI} color="primary">
-              はい
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              いいえ
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {formatText1()}
+
       </div>
     </div>
   );

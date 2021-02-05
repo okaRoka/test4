@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#e4007f',
     margin: 25,
     marginRight: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#c6006f',
     },
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#e4007f',
     margin: 25,
     marginLeft: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#c6006f',
     },
@@ -51,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#f9a455',
     margin: 25,
     marginRight: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#f57c00',
     },
@@ -63,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#f9a455',
     margin: 25,
     marginLeft: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#f57c00',
     },
@@ -76,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#a1d522',
     margin: 25,
     marginRight: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#689f38',
     },
@@ -88,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#a1d522',
     margin: 25,
     marginLeft: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#689f38',
     },
@@ -101,6 +107,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#46b564',
     margin: 25,
     marginRight: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#2e7d32',
     },
@@ -113,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#46b564',
     margin: 25,
     marginLeft: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#2e7d32',
     },
@@ -126,6 +134,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#187fc4',
     margin: 25,
     marginRight: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#005aa0',
     },
@@ -138,6 +147,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#187fc4',
     margin: 25,
     marginLeft: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#005aa0',
     },
@@ -151,6 +161,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#4d4398',
     margin: 25,
     marginRight: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#283593',
     },
@@ -163,6 +174,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#4d4398',
     margin: 25,
     marginLeft: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#283593',
     },
@@ -176,6 +188,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#A64A97',
     margin: 25,
     marginRight: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#800073',
     },
@@ -188,6 +201,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#A64A97',
     margin: 25,
     marginLeft: 15,
+    marginBottom: 10,
     '&:hover' :{
       background: '#800073',
     },
@@ -203,7 +217,7 @@ const ReportComponent = () => {
 
   const handleOnClickHistory = async (prop) => {
     await dispatch(log(userId, prop));
-    dispatch(setUser(name));
+    dispatch(setUser({name: name}));
     history.push('/home/select/report/rHistory?page=' +prop);
   };
 

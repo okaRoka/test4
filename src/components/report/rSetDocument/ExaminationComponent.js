@@ -108,8 +108,11 @@ const ExaminationComponent = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user.userId);
   const name = useSelector(state => state.auth.user.userName);
+  const flagT = useSelector(state => state.auth.flagT);
   const oneData = useSelector(state => state.history.oneData);
+  const user = useSelector(state => state.history.user);
   const [flag, setFlag] = React.useState(true);
+
   // 初期化
   if(flag){
     keyIn = 0;
@@ -194,7 +197,7 @@ const ExaminationComponent = () => {
     examination_people: data.examination_people, interview_form: data.interview_form,
     interview_time: data.interview_time, question: data.question,
     reflections: data.reflections, impressions: data.impressions,
-    select: data.select,
+    select: data.select, approval: data.approval,
   });
   const [states, setState] = React.useState({
     checkedA: check.checkedA, checkedB: check.checkedB,
@@ -345,19 +348,19 @@ const ExaminationComponent = () => {
                 <FormGroup>
                   <FormControlLabel
                     control={<Checkbox
-                      checked={states.checkedA2} onChange={handleChangeChecked}
+                      checked={states.checkedA2} onChange={handleChangeChecked} disabled={flagT}
                       name="checkedA2" value={2}  onClick={handleChange_check2} />}
                     label="一般常識"
                   />
                   <FormControlLabel
                     control={<Checkbox
-                      checked={states.checkedB2} onChange={handleChangeChecked}
+                      checked={states.checkedB2} onChange={handleChangeChecked} disabled={flagT}
                       name="checkedB2" value={3}  onClick={handleChange_check2} />}
                     label="言語"
                   />
                   <FormControlLabel
                     control={<Checkbox
-                      checked={states.checkedC2} onChange={handleChangeChecked}
+                      checked={states.checkedC2} onChange={handleChangeChecked} disabled={flagT}
                       name="checkedC2" value={5}  onClick={handleChange_check2} />}
                     label="非言語"
                   />
@@ -367,19 +370,19 @@ const ExaminationComponent = () => {
                 <FormGroup>
                   <FormControlLabel
                     control={<Checkbox
-                      checked={states.checkedD2} onChange={handleChangeChecked}
+                      checked={states.checkedD2} onChange={handleChangeChecked} disabled={flagT}
                       name="checkedD2" value={7}  onClick={handleChange_check2} />}
                     label="時事"
                   />
                   <FormControlLabel
                     control={<Checkbox
-                      checked={states.checkedE2} onChange={handleChangeChecked}
+                      checked={states.checkedE2} onChange={handleChangeChecked} disabled={flagT}
                       name="checkedE2" value={11} onClick={handleChange_check2} />}
                     label="性格診断"
                   />
                   <FormControlLabel
                     control={<Checkbox
-                      checked={states.checkedF2} onChange={handleChangeChecked}
+                      checked={states.checkedF2} onChange={handleChangeChecked} disabled={flagT}
                       name="checkedF2" value={13} onClick={handleChange_check2} />}
                     label="その他"
                   />
@@ -395,6 +398,7 @@ const ExaminationComponent = () => {
               type="number"
               label="試験時間を入力"
               variant="outlined"
+              disabled={flagT}
               value={values.written_time}
               onChange={handleChange('written_time')}
               InputProps={{
@@ -416,13 +420,13 @@ const ExaminationComponent = () => {
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedA3} onChange={handleChangeChecked}
+                    checked={states.checkedA3} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedA3" value={2}  onClick={handleChange_check3} />}
                   label="情報基礎"
                 />
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedB3} onChange={handleChangeChecked}
+                    checked={states.checkedB3} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedB3" value={3}  onClick={handleChange_check3} />}
                   label="アルゴリズム"
                 />
@@ -432,13 +436,13 @@ const ExaminationComponent = () => {
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedC3} onChange={handleChangeChecked}
+                    checked={states.checkedC3} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedC3" value={5}  onClick={handleChange_check3} />} 
                   label="コーディング"
                 />
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedD3} onChange={handleChangeChecked}
+                    checked={states.checkedD3} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedD3" value={7}  onClick={handleChange_check3} />}
                   label="その他"
                 />
@@ -453,7 +457,7 @@ const ExaminationComponent = () => {
             name='other'
             label="実施した試験を入力"
             variant="outlined"
-            disabled={loading}
+            disabled={loading || flagT}
             value={values.other}
             onChange={handleChange('other')}
           />
@@ -466,6 +470,7 @@ const ExaminationComponent = () => {
             type="number"
             label="試験時間を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.other_time}
             onChange={handleChange('other_time')}
             InputProps={{
@@ -480,6 +485,7 @@ const ExaminationComponent = () => {
             name='other_test'
             label="試験の詳細を入力"
             variant="outlined"
+            disabled={flagT}
             multiline
             rowsMax={4}
             value={values.other_test}
@@ -504,6 +510,7 @@ const ExaminationComponent = () => {
             name='theme'
             label="テーマ名を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.theme}
             onChange={handleChange('theme')}
           />
@@ -516,6 +523,7 @@ const ExaminationComponent = () => {
             label="時間を入力"
             type="number"
             variant="outlined"
+            disabled={flagT}
             value={values.composition_time}
             onChange={handleChange('composition_time')}
             InputProps={{
@@ -531,6 +539,7 @@ const ExaminationComponent = () => {
             type="number"
             label="文字数を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.word}
             onChange={handleChange('word')}
             InputProps={{
@@ -546,6 +555,7 @@ const ExaminationComponent = () => {
             type="number"
             label="完成度を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.completeness}
             onChange={handleChange('completeness')}
             InputProps={{
@@ -572,6 +582,7 @@ const ExaminationComponent = () => {
             type="number"
             label="人数を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.company_people}
             onChange={handleChange('company_people')}
             InputProps={{
@@ -587,6 +598,7 @@ const ExaminationComponent = () => {
             type="number"
             label="自分を含めた人数"
             variant="outlined"
+            disabled={flagT}
             value={values.examination_people}
             onChange={handleChange('examination_people')}
             InputProps={{
@@ -601,6 +613,7 @@ const ExaminationComponent = () => {
             <NativeSelect
               value={values.interview_form}
               open={open}
+              disabled={flagT}
               onChange={handleChange('interview_form')}
               input={<BootstrapInput />}
             >
@@ -620,6 +633,7 @@ const ExaminationComponent = () => {
             type="number"
             label="時間を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.interview_time}
             onChange={handleChange('interview_time')}
             InputProps={{
@@ -634,6 +648,7 @@ const ExaminationComponent = () => {
             name='question'
             label="箇条書きで入力"
             variant="outlined"
+            disabled={flagT}
             multiline
             rowsMax={4}
             value={values.question}
@@ -643,6 +658,71 @@ const ExaminationComponent = () => {
         </div>
       );
     }
+  };
+
+  const formatText5 = () => {
+    if(flagT === false) {
+      return(
+          <div>
+            <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              提出
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              承認
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+
+        </div>
+      );
+    };
   };
   
   const handleChange_check1 = (event) => {
@@ -806,15 +886,26 @@ const ExaminationComponent = () => {
     setOpen(false);
   };
 
+  const time = new Date().getTime();
   const day = new Date().toLocaleString();
-  const today = (new Date().getTime()) * -1;
+  const today = time * -1;
   today.toLocaleString();
 
+  let approval = false;
+
   const handleOnClickI = () => {
-    const usersRef = firebaseDb.ref(userId +'r/examination');
-    const ref = firebaseDb.ref('report/examination/' +userId);
+    let id = userId;
+
+    if(flagT) {
+      id = user.user;
+      approval = true;
+    };
+    
+    const Ref = firebaseDb.ref(id +'r/examination');
+    const ref = firebaseDb.ref('report/examination/' + id);
     if(keyIn === 0) {
-      usersRef.push({
+      const DayRef = Ref.child(time);
+      DayRef.set({
         "company": values.company,
         "address": values.address,
         "contents" : values.contents,
@@ -840,13 +931,15 @@ const ExaminationComponent = () => {
         "select": values.select,
         "today" : today,
         "day" : day,
+        "approval" : approval,
       });
-      ref.push({"company" : values.company});
+      const dayRef = ref.child(time);
+      dayRef.set({"company" : values.company});
       ref.update({"name" : name});
     }
     else {
       keyIn = 0;
-      const updateRef = usersRef.child(data.key);
+      const updateRef = Ref.child(data.key);
       const updRef = ref.child(data.key);
       updateRef.set({
         "company": values.company,
@@ -874,16 +967,26 @@ const ExaminationComponent = () => {
         "select": values.select,
         "today" : today,
         "day" : day,
-        "name" : name,
+        "approval" : approval,
       });
       updRef.set({"company" : values.company});
+      if(flagT) {
+        updateRef.update({"approver" : name});
+      };
     };
     num1 = 1;
     num2 = 1;
     num3 = 1;
     num4 = 1;
-    alert('提出が完了しました。\n各種書類提出画面へ');
-    history.push('/home/select/report');
+    
+    if(flagT === true) {
+      alert('承認が完了しました。');
+      history.push('/home2/book');
+    } else {
+      alert('提出が完了しました。\n各種書類提出画面へ');
+      history.push('/home/select/report');
+    }
+    
   };
 
   return (
@@ -896,6 +999,7 @@ const ExaminationComponent = () => {
             name='company'
             label="例）株式会社○○" 
             variant="outlined"
+            disabled={flagT}
             value={values.company}
             onChange={handleChange('company')}
           />
@@ -907,6 +1011,7 @@ const ExaminationComponent = () => {
             name='address'
             label="住所を入力"
             variant="outlined"
+            disabled={flagT}
             value={values.address}
             onChange={handleChange('address')}
           />
@@ -918,13 +1023,13 @@ const ExaminationComponent = () => {
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedA} onChange={handleChangeChecked}
+                    checked={states.checkedA} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedA" value={2}  onClick={handleChange_check1} />}
                   label="一次試験"
                 />
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedB} onChange={handleChangeChecked}
+                    checked={states.checkedB} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedB" value={3}  onClick={handleChange_check1} />}
                   label="二次試験"
                 />
@@ -934,13 +1039,13 @@ const ExaminationComponent = () => {
               <FormGroup>
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedC} onChange={handleChangeChecked}
+                    checked={states.checkedC} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedC" value={5}  onClick={handleChange_check1} />}
                   label="三次試験"
                 />
                 <FormControlLabel
                   control={<Checkbox
-                    checked={states.checkedD} onChange={handleChangeChecked}
+                    checked={states.checkedD} onChange={handleChangeChecked} disabled={flagT}
                     name="checkedD" value={7}  onClick={handleChange_check1} />}
                   label="その他"
                 />
@@ -955,6 +1060,7 @@ const ExaminationComponent = () => {
             name='examination_day'
             type="date"
             variant="outlined"
+            disabled={flagT}
             value={values.examination_day}
             onChange={handleChange('examination_day')}
           />
@@ -966,6 +1072,7 @@ const ExaminationComponent = () => {
             name='result_day'
             type="date"
             variant="outlined"
+            disabled={flagT}
             value={values.result_day}
             onChange={handleChange('result_day')}
           />
@@ -977,13 +1084,13 @@ const ExaminationComponent = () => {
             <FormGroup>
               <FormControlLabel
                 control={<Checkbox
-                  checked={states.checkedA4} onChange={handleChangeChecked}
+                  checked={states.checkedA4} onChange={handleChangeChecked} disabled={flagT}
                   name="checkedA4" value={2} onClick={handleChange_check4} />}
                 label="筆記試験"
               />
               <FormControlLabel
                 control={<Checkbox
-                  checked={states.checkedB4} onChange={handleChangeChecked}
+                  checked={states.checkedB4} onChange={handleChangeChecked} disabled={flagT}
                   name="checkedB4" value={3} onClick={handleChange_check4} />}
                 label="実技科目"
               />
@@ -993,13 +1100,13 @@ const ExaminationComponent = () => {
             <FormGroup>
               <FormControlLabel
                 control={<Checkbox
-                  checked={states.checkedC4} onChange={handleChangeChecked}
+                  checked={states.checkedC4} onChange={handleChangeChecked} disabled={flagT}
                   name="checkedC4" value={5} onClick={handleChange_check4} />}
                 label="作文"
               />
               <FormControlLabel
                 control={<Checkbox
-                  checked={states.checkedD4} onChange={handleChangeChecked}
+                  checked={states.checkedD4} onChange={handleChangeChecked} disabled={flagT}
                   name="checkedD4" value={7} onClick={handleChange_check4} />}
                 label="面接内容"
               />
@@ -1019,6 +1126,7 @@ const ExaminationComponent = () => {
             name='reflections'
             label="反省点を入力"
             variant="outlined"
+            disabled={flagT}
             multiline
             rowsMax={4}
             value={values.reflections}
@@ -1032,6 +1140,7 @@ const ExaminationComponent = () => {
             name='impressions'
             label="詳細を入力"
             variant="outlined"
+            disabled={flagT}
             multiline
             rowsMax={4}
             value={values.impressions}
@@ -1039,33 +1148,13 @@ const ExaminationComponent = () => {
           />
 
         <br/><br/>
-        <Button 
-          className={classes.Rbutton}
-          variant="contained"
-          color="primary"
-          onClick={handleClickOpen}
-        >
-          提出
-        </Button>
 
-        <Dialog
-          open={open}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-          <DialogActions>
-            <Button onClick={handleOnClickI} color="primary">
-              はい
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              いいえ
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {formatText5()}
+        
       </div>
     </div>
   );
+                
 };
 
 export default ExaminationComponent;

@@ -84,7 +84,9 @@ const AssessmentComponent = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.user.userId);
   const name = useSelector(state => state.auth.user.userName);
+  const flagT = useSelector(state => state.auth.flagT);
   const oneData = useSelector(state => state.history.oneData);
+  const user = useSelector(state => state.history.user);
   const [flag, setFlag] = React.useState(true);
   // 初期化
   if(flag){
@@ -106,7 +108,7 @@ const AssessmentComponent = () => {
     company: data.company, occupation: data.occupation,
     activity: data.activity, failure_day: data.failure_day,
     item: data.item, assessment: data.assessment,
-    remedy: data.remedy,
+    remedy: data.remedy, approval: data.approval,
   });
   const [open, setOpen] = React.useState(false);
 
@@ -186,15 +188,90 @@ const AssessmentComponent = () => {
     setOpen(false);
   };
 
+  const formatText1 = () => {
+    if(flagT === false) {
+      return(
+          <div>
+            <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              提出
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <Button 
+            className={classes.Rbutton}
+            variant="contained"
+            color="primary"
+            disabled={values.approval}
+            onClick={handleClickOpen}
+            >
+              承認
+            </Button>
+
+            <Dialog
+              open={open}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleOnClickI} color="primary">
+                はい
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                いいえ
+              </Button>
+            </DialogActions>
+            </Dialog>
+
+        </div>
+      );
+    };
+  };
+
+  const time = new Date().getTime();
   const day = new Date().toLocaleString();
-  const today = (new Date().getTime()) * -1;
+  const today = time * -1;
   today.toLocaleString();
 
+  let approval = false;
+
   const handleOnClickI = () => {
-    const usersRef = firebaseDb.ref(userId +'r/assessment');
-    const ref = firebaseDb.ref('report/assessment/' +userId);
+    let id = userId;
+
+    if(flagT) {
+      id = user.user;
+      approval = true;
+    };
+    const Ref = firebaseDb.ref(id +'r/assessment');
+    const ref = firebaseDb.ref('report/assessment/' + id);
     if(keyIn === 0) {
-      usersRef.push({
+      const DayRef = Ref.child(time);
+      DayRef.set({
         "company" : values.company,
         "occupation" : values.occupation,
         "activity": values.activity,
@@ -204,13 +281,15 @@ const AssessmentComponent = () => {
         "remedy" : values.remedy,
         "today" : today,
         "day" : day,
+        "approval" : approval,
       });
-      ref.push({"company" : values.company});
+      const dayRef = ref.child(time);
+      dayRef.set({"company" : values.company});
       ref.update({"name" : name});
     }
     else {
       keyIn = 0;
-      const updateRef = usersRef.child(data.key);
+      const updateRef = Ref.child(data.key);
       const updRef = ref.child(data.key);
       updateRef.set({
         "company" : values.company,
@@ -222,13 +301,20 @@ const AssessmentComponent = () => {
         "remedy" : values.remedy,
         "today" : today,
         "day" : day,
-        "name" : name,
+        "approval" : approval,
       });
       updRef.set({"company" : values.company});
+      if(flagT) {
+        updateRef.update({"approver" : name});
+      };
     };
-
-    alert('提出が完了しました。\n各種書類提出画面へ');
-    history.push('/home/select/report');
+    if(flagT === true) {
+      alert('承認が完了しました。');
+      history.push('/home2/book');
+    } else {
+      alert('提出が完了しました。\n各種書類提出画面へ');
+      history.push('/home/select/report');
+    }
   };
 
   return (
@@ -241,6 +327,7 @@ const AssessmentComponent = () => {
             name='company'
             label="例）株式会社○○" 
             variant="outlined"
+            disabled={flagT}
             value={values.company}
             onChange={handleChange('company')}
           />
@@ -252,6 +339,7 @@ const AssessmentComponent = () => {
             name='occupation'
             label="例）システムエンジニア" 
             variant="outlined"
+            disabled={flagT}
             value={values.occupation}
             onChange={handleChange('occupation')}
           />
@@ -263,6 +351,7 @@ const AssessmentComponent = () => {
             <NativeSelect
             value={values.activity}
             open={open}
+            disabled={flagT}
             onChange={handleChange('activity')}
             input={<BootstrapInput />}
             >
@@ -281,6 +370,7 @@ const AssessmentComponent = () => {
             name='failure_day'
             type="date"
             variant="outlined"
+            disabled={flagT}
             value={values.failure_day}
             onChange={handleChange('failure_day')}
           />
@@ -291,6 +381,7 @@ const AssessmentComponent = () => {
             <InputLabel htmlFor="select">不採用項目</InputLabel>
               <NativeSelect
                 value={values.item}
+                disabled={flagT}
                 onChange={handleChange('item')}
                 input={<BootstrapInput />}
               >
@@ -309,6 +400,7 @@ const AssessmentComponent = () => {
             <InputLabel htmlFor="select">自己評価度</InputLabel>
               <NativeSelect
                 value={values.assessment}
+                disabled={flagT}
                 onChange={handleChange('assessment')}
                 input={<BootstrapInput />}
               >
@@ -326,37 +418,17 @@ const AssessmentComponent = () => {
             name='remedy'
             label="改善策を入力" 
             variant="outlined"
+            disabled={flagT}
             multiline
             rowsMax={4}
             value={values.remedy}
             onChange={handleChange('remedy')}
           />
           
-        <br/><br/>
-        <Button 
-          className={classes.Rbutton}
-          variant="contained"
-          color="primary"
-          onClick={handleClickOpen}
-        >
-          提出
-        </Button>
+          <br></br>
+          
+          {formatText1()}
 
-        <Dialog
-          open={open}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-          <DialogActions>
-            <Button onClick={handleOnClickI} color="primary">
-              はい
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              いいえ
-            </Button>
-          </DialogActions>
-        </Dialog>
       </div>
     </div>
   );

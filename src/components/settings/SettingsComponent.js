@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     textAlign:'center',
     fontSize: 18,
+    marginTop: theme.spacing(3),
   },
   root2: {
     margin: theme.spacing(2),

@@ -4,7 +4,7 @@ import { internApi, applicationApi, participationApi, examinationApi,
 
 const initialState = {
   data: null, // 情報の格納場所
-  user: "",
+  user: null,
   oneData: null,
 };
 
