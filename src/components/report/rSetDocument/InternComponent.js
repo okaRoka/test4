@@ -44,7 +44,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   size1 :{
-    width: 155,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    width: 135,
   },
 }));
 
@@ -146,32 +148,30 @@ const InternComponent = () => {
   const formatText1 = () => {
     if(flagT === false) {
       return(
-          <div>
-            <Button 
+        <div>
+          <Button 
             className={classes.Rbutton}
-            variant="contained"
-            color="primary"
-            disabled={values.approval}
-            onClick={handleClickOpen}
-            >
-              提出
-            </Button>
+            variant="contained" color="primary"
+            disabled={values.approval} onClick={handleClickOpen}
+          >
+            提出
+          </Button>
 
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
-            </Dialog>
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleOnClickI} color="primary">
+              はい
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              いいえ
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     } else {
@@ -179,30 +179,27 @@ const InternComponent = () => {
         <div>
           <Button 
             className={classes.Rbutton}
-            variant="contained"
-            color="primary"
-            disabled={values.approval}
-            onClick={handleClickOpen}
-            >
-              承認
+            variant="contained" color="primary"
+            disabled={values.approval} onClick={handleClickOpen}
+          >
+            承認
+          </Button>
+
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleOnClickI} color="primary">
+              はい
             </Button>
-
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
-            </Dialog>
-
+            <Button onClick={handleClose} color="primary">
+              いいえ
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     };
@@ -261,13 +258,14 @@ const InternComponent = () => {
         updateRef.update({"approver" : name});
       };
     };
+
     if(flagT === true) {
       alert('承認が完了しました。');
       history.push('/home2/book');
     } else {
       alert('提出が完了しました。\n各種書類提出画面へ');
       history.push('/home/select/report');
-    }
+    };
   };
 
   return (
@@ -277,24 +275,18 @@ const InternComponent = () => {
           <Typography className={classes.check1} >{check1}</Typography>
           <TextField
             className={classes.size}
-            name='company'
-            label="例）株式会社○○" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.company}
-            onChange={handleChange('company')}
+            name='company' label="例）株式会社○○" 
+            variant="outlined" disabled={flagT}
+            value={values.company} onChange={handleChange('company')}
           />
 
         <p>住所</p>
           <Typography className={classes.check1} >{check2}</Typography>
           <TextField
             className={classes.size}
-            name='address'
-            label="住所を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.address}
-            onChange={handleChange('address')}
+            name='address' label="住所を入力"
+            variant="outlined" disabled={flagT}
+            value={values.address} onChange={handleChange('address')}
           />
 
         <p>実習期間</p>
@@ -302,8 +294,7 @@ const InternComponent = () => {
           <TextField
             className={classes.size1}
             name='practice_start'
-            type="date"
-            disabled={flagT}
+            type="date" disabled={flagT}
             value={values.practice_start}
             onChange={handleChange('practice_start')}
           />
@@ -311,8 +302,7 @@ const InternComponent = () => {
           <TextField
             className={classes.size1}
             name='practice_end'
-            type="date"
-            disabled={flagT}
+            type="date" disabled={flagT}
             value={values.practice_end}
             onChange={handleChange('practice_end')}
           />
@@ -321,29 +311,22 @@ const InternComponent = () => {
           <Typography className={classes.check1} >{check4}</Typography>
           <TextField
             className={classes.size}
-            name='practice'
-            label="内容を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.practice}
-            onChange={handleChange('practice')}
+            name='practice' label="内容を入力"
+            variant="outlined" disabled={flagT}
+            value={values.practice} onChange={handleChange('practice')}
           />
       
         <p>感想</p>
           <Typography className={classes.check1} >{check5}</Typography>
           <TextField
             className={classes.size}
-            name='impressions'
-            label="感想を入力"
-            variant="outlined"
-            disabled={flagT} 
-            value={values.impressions}
-            onChange={handleChange('impressions')}
+            name='impressions' label="感想を入力"
+            variant="outlined" disabled={flagT} 
+            value={values.impressions} onChange={handleChange('impressions')}
           />
+        <br></br>
 
-          <br></br>
-
-          {formatText1()}
+        {formatText1()}
 
       </div>
     </div>

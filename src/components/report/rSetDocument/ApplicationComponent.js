@@ -69,16 +69,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     color: '#FFF',
     background: '#5cca13',
-    margin:20 ,
+    margin: 20,
     '&:hover' :{
       background: '#4eaa10',
     },
   },
   test :{
-    marginLeft:50,
+    marginLeft: theme.spacing(2),
   },
   test1 :{
-    marginRight:10,
+    marginRight: theme.spacing(3),
   },
 
   haikei :{
@@ -94,11 +94,13 @@ const useStyles = makeStyles((theme) => ({
     height: 130,
   },
   size: {
-    width: 320,
+    width: 350,
     backgroundColor: theme.palette.background.paper,
   },
   size1 :{
-    width: 155,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    width: 150,
   },
 }));
 
@@ -243,32 +245,32 @@ const ApplicationComponent = () => {
   const formatText1 = () => {
     if(flagT === false) {
       return(
-          <div>
-            <Button 
+        <div>
+          <Button 
             className={classes.Rbutton}
             variant="contained"
             color="primary"
             disabled={values.approval}
             onClick={handleClickOpen}
-            >
-              提出
-            </Button>
+          >
+            提出
+          </Button>
 
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
-            </Dialog>
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleOnClickI} color="primary">
+              はい
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              いいえ
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     } else {
@@ -280,26 +282,25 @@ const ApplicationComponent = () => {
             color="primary"
             disabled={values.approval}
             onClick={handleClickOpen}
-            >
-              承認
+          >
+            承認
+          </Button>
+
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleOnClickI} color="primary">
+              はい
             </Button>
-
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
-            </Dialog>
-
+            <Button onClick={handleClose} color="primary">
+              いいえ
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     };
@@ -423,44 +424,32 @@ const ApplicationComponent = () => {
           <Typography className={classes.check1} >{check1}</Typography>
           <TextField
             className={classes.size}
-            name='company'
-            label="例）株式会社○○" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.company}
-            onChange={handleChange('company')}
+            name='company' label="例）株式会社○○" 
+            variant="outlined" disabled={flagT}
+            value={values.company} onChange={handleChange('company')}
           />
 
         <p>住所</p>
           <Typography className={classes.check1} >{check2}</Typography>
           <TextField
             className={classes.size}
-            label="住所を入力" 
-            variant="outlined"
-            name='address'
-            disabled={flagT} 
-            value={values.address}
-            onChange={handleChange('address')}
+            name='address' label="住所を入力" 
+            variant="outlined" disabled={flagT} 
+            value={values.address} onChange={handleChange('address')}
           />
 
         <p>開催期間</p>
           <Typography className={classes.check1} >{check3}</Typography>
           <TextField
             className={classes.size1}
-            name='practice_start'
-            type="date"
-            disabled={flagT}
-            value={values.practice_start}
-            onChange={handleChange('practice_start')}
+            name='practice_start' type="date" disabled={flagT}
+            value={values.practice_start} onChange={handleChange('practice_start')}
           />
           ～
           <TextField
             className={classes.size1}
-            name='practice_end'
-            type="date"
-            disabled={flagT}
-            value={values.practice_end}
-            onChange={handleChange('practice_end')}
+            name='practice_end' type="date" disabled={flagT}
+            value={values.practice_end} onChange={handleChange('practice_end')}
           />
 
         <p>活動方法</p>
@@ -468,17 +457,16 @@ const ApplicationComponent = () => {
           <FormControl className={classes.size} variant="outlined">
             <InputLabel htmlFor="select">活動方法</InputLabel>
             <NativeSelect
-              disabled={flagT}
+              open={open} disabled={flagT}
               value={values.activity}
-              open={open}
               onChange={handleChange('activity')}
               input={<BootstrapInput2 />}
             >
-                <option value="" aria-label="None"></option>
-                <option value="学校斡旋">学校斡旋</option>
-                <option value="縁故">自由応募</option>
-                <option value="自由応募">縁故</option>
-                <option value="その他">その他</option>
+              <option value="" aria-label="None"></option>
+              <option value="学校斡旋">学校斡旋</option>
+              <option value="縁故">自由応募</option>
+              <option value="自由応募">縁故</option>
+              <option value="その他">その他</option>
             </NativeSelect>
           </FormControl>
         
@@ -595,13 +583,9 @@ const ApplicationComponent = () => {
         <p>応募締め切り日</p>
           <Typography className={classes.check1} >{check7}</Typography>
           <TextField
-            className={classes.size}
-            name='deadline'
-            type="date"
-            variant="outlined"
-            disabled={flagT}
-            value={values.deadline}
-            onChange={handleChange('deadline')}
+            className={classes.size} name='deadline'
+            type="date" variant="outlined" disabled={flagT}
+            value={values.deadline} onChange={handleChange('deadline')}
           />
         
         <br/><br/>

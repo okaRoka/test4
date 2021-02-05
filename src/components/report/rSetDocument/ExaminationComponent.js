@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#ff0000'
   },
   test :{
-    marginRight:50,
+    marginLeft: theme.spacing(3),
   },
   haikei :{
     margin: 'auto',
@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     color: '#FFF',
     background: '#5cca13',
-    margin:20 ,
+    margin: 20,
       '&:hover' :{
         background: '#4eaa10',
       },
@@ -342,7 +342,7 @@ const ExaminationComponent = () => {
       return(
         <div>
           <p>筆記試験</p>
-            <Typography className={classes.check1} >{check6}</Typography>
+            <Typography className={classes.check1}>{check6}</Typography>
             <Paper variant="outlined" className={classes.haikei1}>
               <FormControl>
                 <FormGroup>
@@ -391,16 +391,12 @@ const ExaminationComponent = () => {
             </Paper>
 
           <p>試験時間</p>
-            <Typography className={classes.check1} >{check7}</Typography>
+            <Typography className={classes.check1}>{check7}</Typography>
             <TextField
               className={classes.size}
-              name='written_time'
-              type="number"
-              label="試験時間を入力"
-              variant="outlined"
-              disabled={flagT}
-              value={values.written_time}
-              onChange={handleChange('written_time')}
+              name='written_time' label="試験時間を入力"
+              type="number" variant="outlined" disabled={flagT}
+              value={values.written_time} onChange={handleChange('written_time')}
               InputProps={{
                 endAdornment: <InputAdornment position="end">分</InputAdornment>,
               }}
@@ -414,86 +410,74 @@ const ExaminationComponent = () => {
       return(
         <div>
           <p>実技科目</p>
-          <Typography className={classes.check1} >{check8}</Typography>
-          <Paper variant="outlined" className={classes.haikei2}>
-            <FormControl  className={classes.test1}>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox
-                    checked={states.checkedA3} onChange={handleChangeChecked} disabled={flagT}
-                    name="checkedA3" value={2}  onClick={handleChange_check3} />}
-                  label="情報基礎"
-                />
-                <FormControlLabel
-                  control={<Checkbox
-                    checked={states.checkedB3} onChange={handleChangeChecked} disabled={flagT}
-                    name="checkedB3" value={3}  onClick={handleChange_check3} />}
-                  label="アルゴリズム"
-                />
-              </FormGroup> 
-            </FormControl> 
-            <FormControl>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox
-                    checked={states.checkedC3} onChange={handleChangeChecked} disabled={flagT}
-                    name="checkedC3" value={5}  onClick={handleChange_check3} />} 
-                  label="コーディング"
-                />
-                <FormControlLabel
-                  control={<Checkbox
-                    checked={states.checkedD3} onChange={handleChangeChecked} disabled={flagT}
-                    name="checkedD3" value={7}  onClick={handleChange_check3} />}
-                  label="その他"
-                />
-              </FormGroup> 
-            </FormControl>
-          </Paper>
+            <Typography className={classes.check1} >{check8}</Typography>
+            <Paper variant="outlined" className={classes.haikei2}>
+              <FormControl  className={classes.test1}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox
+                      checked={states.checkedA3} onChange={handleChangeChecked} disabled={flagT}
+                      name="checkedA3" value={2}  onClick={handleChange_check3} />}
+                    label="情報基礎"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox
+                      checked={states.checkedB3} onChange={handleChangeChecked} disabled={flagT}
+                      name="checkedB3" value={3}  onClick={handleChange_check3} />}
+                    label="アルゴリズム"
+                  />
+                </FormGroup> 
+              </FormControl> 
+              <FormControl>
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox
+                      checked={states.checkedC3} onChange={handleChangeChecked} disabled={flagT}
+                      name="checkedC3" value={5}  onClick={handleChange_check3} />} 
+                    label="コーディング"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox
+                      checked={states.checkedD3} onChange={handleChangeChecked} disabled={flagT}
+                      name="checkedD3" value={7}  onClick={handleChange_check3} />}
+                    label="その他"
+                  />
+                </FormGroup> 
+              </FormControl>
+            </Paper>
 
-        <p>その他の場合</p>
-          <Typography className={classes.check1} >{check9}</Typography>
-          <TextField
-            className={classes.size}
-            name='other'
-            label="実施した試験を入力"
-            variant="outlined"
-            disabled={loading || flagT}
-            value={values.other}
-            onChange={handleChange('other')}
-          />
+          <p>その他の場合</p>
+            <Typography className={classes.check1}>{check9}</Typography>
+            <TextField
+              className={classes.size}
+              name='other' label="実施した試験を入力"
+              variant="outlined" disabled={loading || flagT}
+              value={values.other} onChange={handleChange('other')}
+            />
         
-        <p>試験時間</p>
-          <Typography className={classes.check1} >{check10}</Typography>
-          <TextField
-            className={classes.size}
-            name='other_time'
-            type="number"
-            label="試験時間を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.other_time}
-            onChange={handleChange('other_time')}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">分</InputAdornment>,
-            }}
-          />
+          <p>試験時間</p>
+            <Typography className={classes.check1}>{check10}</Typography>
+            <TextField
+              className={classes.size}
+              name='other_time' label="試験時間を入力"
+              type="number" variant="outlined" disabled={flagT}
+              value={values.other_time} onChange={handleChange('other_time')}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">分</InputAdornment>,
+              }}
+            />
 
-        <p>試験内容</p>
-          <Typography className={classes.check1} >{check11}</Typography>
-          <TextField
-            className={classes.size}
-            name='other_test'
-            label="試験の詳細を入力"
-            variant="outlined"
-            disabled={flagT}
-            multiline
-            rowsMax={4}
-            value={values.other_test}
-            onChange={handleChange('other_test')}
-          />
-
-        <br/><br/>
-          
+          <p>試験内容</p>
+            <Typography className={classes.check1}>{check11}</Typography>
+            <TextField
+              className={classes.size}
+              name='other_test' label="試験の詳細を入力"
+              variant="outlined" disabled={flagT}
+              multiline rowsMax={4}
+              value={values.other_test}
+              onChange={handleChange('other_test')}
+            />
+          <br/><br/>
         </div>
       );
     }
@@ -503,68 +487,51 @@ const ExaminationComponent = () => {
       return(
         <div>
           <p className={classes.root1}>作文</p>
-        <p>テーマ名</p>
-          <Typography className={classes.check1} >{check12}</Typography>
-          <TextField
-            className={classes.size}
-            name='theme'
-            label="テーマ名を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.theme}
-            onChange={handleChange('theme')}
-          />
+          <p>テーマ名</p>
+            <Typography className={classes.check1}>{check12}</Typography>
+            <TextField
+              className={classes.size}
+              name='theme' label="テーマ名を入力"
+              variant="outlined" disabled={flagT}
+              value={values.theme} onChange={handleChange('theme')}
+            />
 
-        <p>時間</p>
-          <Typography className={classes.check1} >{check13}</Typography>
-          <TextField
-            className={classes.size}
-            name='composition_time'
-            label="時間を入力"
-            type="number"
-            variant="outlined"
-            disabled={flagT}
-            value={values.composition_time}
-            onChange={handleChange('composition_time')}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">分</InputAdornment>,
-            }}
-          />
+          <p>時間</p>
+            <Typography className={classes.check1}>{check13}</Typography>
+            <TextField
+              className={classes.size}
+              name='composition_time' label="時間を入力"
+              type="number" variant="outlined" disabled={flagT}
+              value={values.composition_time} onChange={handleChange('composition_time')}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">分</InputAdornment>,
+              }}
+            />
         
-        <p>文字数</p>
-          <Typography className={classes.check1} >{check14}</Typography>
-          <TextField
-            className={classes.size}
-            name='word'
-            type="number"
-            label="文字数を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.word}
-            onChange={handleChange('word')}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">字</InputAdornment>,
-            }}
-          />
+          <p>文字数</p>
+            <Typography className={classes.check1} >{check14}</Typography>
+            <TextField
+              className={classes.size}
+              name='word' label="文字数を入力"
+              type="number" variant="outlined" disabled={flagT}
+              value={values.word} onChange={handleChange('word')}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">字</InputAdornment>,
+              }}
+            />
 
-        <p>完成度</p>
-          <Typography className={classes.check1} >{check15}</Typography>
-          <TextField
-            className={classes.size}
-            name='completeness'
-            type="number"
-            label="完成度を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.completeness}
-            onChange={handleChange('completeness')}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">％</InputAdornment>,
-            }}
-          />
-
-        <br/><br/>
-          
+          <p>完成度</p>
+            <Typography className={classes.check1} >{check15}</Typography>
+            <TextField
+              className={classes.size}
+              name='completeness' label="完成度を入力"
+              type="number" variant="outlined" disabled={flagT}
+              value={values.completeness} onChange={handleChange('completeness')}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">％</InputAdornment>,
+              }}
+            />
+          <br/><br/>
         </div>
       );
     }
@@ -574,87 +541,70 @@ const ExaminationComponent = () => {
       return(
         <div>
           <p className={classes.root1}>面接内容</p>
-        <p>企業側</p>
-          <Typography className={classes.check1} >{check16}</Typography>
-          <TextField
-            className={classes.size}
-            name='company_people'
-            type="number"
-            label="人数を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.company_people}
-            onChange={handleChange('company_people')}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">人</InputAdornment>,
-            }}
-          />
+          <p>企業側</p>
+            <Typography className={classes.check1} >{check16}</Typography>
+            <TextField
+              className={classes.size}
+              name='company_people' label="人数を入力"
+              type="number" variant="outlined" disabled={flagT}
+              value={values.company_people} onChange={handleChange('company_people')}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">人</InputAdornment>,
+              }}
+            />
         
-        <p>受験者</p>
-          <Typography className={classes.check1} >{check17}</Typography>
-          <TextField
-            className={classes.size}
-            name='examination_people'
-            type="number"
-            label="自分を含めた人数"
-            variant="outlined"
-            disabled={flagT}
-            value={values.examination_people}
-            onChange={handleChange('examination_people')}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">人</InputAdornment>,
-            }}
-          />
+          <p>受験者</p>
+            <Typography className={classes.check1} >{check17}</Typography>
+            <TextField
+              className={classes.size}
+              name='examination_people' label="自分を含めた人数"
+              type="number" variant="outlined" disabled={flagT}
+              value={values.examination_people} onChange={handleChange('examination_people')}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">人</InputAdornment>,
+              }}
+            />
 
-        <p>面接形態</p>
-          <Typography className={classes.check1} >{check18}</Typography>
-          <FormControl className={classes.size} variant="outlined">
-            <InputLabel htmlFor="select">面接形態</InputLabel>
-            <NativeSelect
-              value={values.interview_form}
-              open={open}
-              disabled={flagT}
-              onChange={handleChange('interview_form')}
-              input={<BootstrapInput />}
-            >
-              <option value="" aria-label="None"></option>
-              <option value="個人面接">個人面接</option>
-              <option value="集団面接">集団面接</option>
-              <option value="グループ討議">グループ討議</option>
-              <option value="その他">その他</option>
-            </NativeSelect>
-          </FormControl>
+          <p>面接形態</p>
+            <Typography className={classes.check1} >{check18}</Typography>
+            <FormControl className={classes.size} variant="outlined">
+              <InputLabel htmlFor="select">面接形態</InputLabel>
+              <NativeSelect
+                value={values.interview_form}
+                open={open} disabled={flagT}
+                onChange={handleChange('interview_form')}
+                input={<BootstrapInput />}
+              >
+                <option value="" aria-label="None"></option>
+                <option value="個人面接">個人面接</option>
+                <option value="集団面接">集団面接</option>
+                <option value="グループ討議">グループ討議</option>
+                <option value="その他">その他</option>
+              </NativeSelect>
+            </FormControl>
 
-        <p>面接時間</p>
-          <Typography className={classes.check1} >{check19}</Typography>
-          <TextField
-            className={classes.size}
-            name='interview_time'
-            type="number"
-            label="時間を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.interview_time}
-            onChange={handleChange('interview_time')}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">分</InputAdornment>,
-            }}
-          />
+          <p>面接時間</p>
+            <Typography className={classes.check1} >{check19}</Typography>
+            <TextField
+              className={classes.size}
+              name='interview_time' label="時間を入力"
+              type="number" variant="outlined" disabled={flagT}
+              value={values.interview_time} onChange={handleChange('interview_time')}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">分</InputAdornment>,
+              }}
+            />
         
-        <p>企業側の質問内容</p>
-          <Typography className={classes.check1} >{check20}</Typography>
-          <TextField
-            className={classes.size}
-            name='question'
-            label="箇条書きで入力"
-            variant="outlined"
-            disabled={flagT}
-            multiline
-            rowsMax={4}
-            value={values.question}
-            onChange={handleChange('question')}
-          />
-          
+          <p>企業側の質問内容</p>
+            <Typography className={classes.check1} >{check20}</Typography>
+            <TextField
+              className={classes.size}
+              name='question' label="箇条書きで入力"
+              variant="outlined" disabled={flagT}
+              multiline rowsMax={4}
+              value={values.question}
+              onChange={handleChange('question')}
+            />
         </div>
       );
     }
@@ -663,32 +613,30 @@ const ExaminationComponent = () => {
   const formatText5 = () => {
     if(flagT === false) {
       return(
-          <div>
-            <Button 
+        <div>
+          <Button 
             className={classes.Rbutton}
-            variant="contained"
-            color="primary"
-            disabled={values.approval}
-            onClick={handleClickOpen}
-            >
-              提出
-            </Button>
+            variant="contained" color="primary"
+            disabled={values.approval} onClick={handleClickOpen}
+          >
+            提出
+          </Button>
 
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
-            </Dialog>
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleOnClickI} color="primary">
+              はい
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              いいえ
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     } else {
@@ -696,30 +644,27 @@ const ExaminationComponent = () => {
         <div>
           <Button 
             className={classes.Rbutton}
-            variant="contained"
-            color="primary"
-            disabled={values.approval}
-            onClick={handleClickOpen}
-            >
-              承認
+            variant="contained" color="primary"
+            disabled={values.approval} onClick={handleClickOpen}
+          >
+            承認
+          </Button>
+
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleOnClickI} color="primary">
+              はい
             </Button>
-
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
-            </Dialog>
-
+            <Button onClick={handleClose} color="primary">
+              いいえ
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     };
@@ -985,8 +930,7 @@ const ExaminationComponent = () => {
     } else {
       alert('提出が完了しました。\n各種書類提出画面へ');
       history.push('/home/select/report');
-    }
-    
+    };
   };
 
   return (
@@ -996,28 +940,22 @@ const ExaminationComponent = () => {
           <Typography className={classes.check1} >{check1}</Typography>
           <TextField
             className={classes.size}
-            name='company'
-            label="例）株式会社○○" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.company}
-            onChange={handleChange('company')}
+            name='company' label="例）株式会社○○" 
+            variant="outlined" disabled={flagT}
+            value={values.company} onChange={handleChange('company')}
           />
 
         <p>住所</p>
           <Typography className={classes.check1} >{check2}</Typography>
           <TextField
             className={classes.size}
-            name='address'
-            label="住所を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.address}
-            onChange={handleChange('address')}
+            name='address' label="住所を入力"
+            variant="outlined" disabled={flagT}
+            value={values.address} onChange={handleChange('address')}
           />
 
         <p>実施試験</p>
-        <Typography className={classes.check1} >{check3}</Typography>
+          <Typography className={classes.check1} >{check3}</Typography>
           <Paper variant="outlined" className={classes.haikei}>
             <FormControl className={classes.test}>
               <FormGroup>
@@ -1058,11 +996,8 @@ const ExaminationComponent = () => {
           <TextField
             className={classes.size}
             name='examination_day'
-            type="date"
-            variant="outlined"
-            disabled={flagT}
-            value={values.examination_day}
-            onChange={handleChange('examination_day')}
+            type="date" variant="outlined" disabled={flagT}
+            value={values.examination_day} onChange={handleChange('examination_day')}
           />
         
         <p>結果通知日</p>
@@ -1070,16 +1005,13 @@ const ExaminationComponent = () => {
           <TextField
             className={classes.size}
             name='result_day'
-            type="date"
-            variant="outlined"
-            disabled={flagT}
-            value={values.result_day}
-            onChange={handleChange('result_day')}
+            type="date" variant="outlined" disabled={flagT}
+            value={values.result_day} onChange={handleChange('result_day')}
           />
         <br/><br/>
 
         <p className={classes.root1}>試験内容</p>
-        <Paper variant="outlined" className={classes.haikei}>
+          <Paper variant="outlined" className={classes.haikei}>
           <FormControl className={classes.test}>
             <FormGroup>
               <FormControlLabel
@@ -1123,30 +1055,22 @@ const ExaminationComponent = () => {
           <Typography className={classes.check1} >{check21}</Typography>
           <TextField
             className={classes.size}
-            name='reflections'
-            label="反省点を入力"
-            variant="outlined"
-            disabled={flagT}
-            multiline
-            rowsMax={4}
-            value={values.reflections}
-            onChange={handleChange('reflections')}
+            name='reflections' label="反省点を入力"
+            variant="outlined" disabled={flagT}
+            multiline rowsMax={4}
+            value={values.reflections} onChange={handleChange('reflections')}
           />
         
         <p>受験後の感想と後輩への助言</p>
           <Typography className={classes.check1} >{check22}</Typography>
           <TextField
             className={classes.size}
-            name='impressions'
-            label="詳細を入力"
-            variant="outlined"
-            disabled={flagT}
-            multiline
-            rowsMax={4}
+            name='impressions' label="詳細を入力"
+            variant="outlined" disabled={flagT}
+            multiline rowsMax={4}
             value={values.impressions}
             onChange={handleChange('impressions')}
           />
-
         <br/><br/>
 
         {formatText5()}
@@ -1154,7 +1078,6 @@ const ExaminationComponent = () => {
       </div>
     </div>
   );
-                
 };
 
 export default ExaminationComponent;

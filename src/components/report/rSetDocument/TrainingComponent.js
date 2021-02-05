@@ -43,12 +43,18 @@ const useStyles = makeStyles((theme) => ({
       background: ' #4eaa10',
     },
   },
+  radio: {
+    marginLeft: theme.spacing(2),
+  },
+
   size :{
     width: 320,
     backgroundColor: theme.palette.background.paper,
   },
   size1 :{
-    width: 155,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    width: 135,
   },
 }));
 
@@ -185,32 +191,30 @@ const TrainingComponent = () => {
   const formatText1 = () => {
     if(flagT === false) {
       return(
-          <div>
-            <Button 
+        <div>
+          <Button 
             className={classes.Rbutton}
-            variant="contained"
-            color="primary"
-            disabled={values.approval}
-            onClick={handleClickOpen}
-            >
-              提出
-            </Button>
+            variant="contained" color="primary"
+            disabled={values.approval} onClick={handleClickOpen}
+          >
+            提出
+          </Button>
 
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
-            </Dialog>
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleOnClickI} color="primary">
+              はい
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              いいえ
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     } else {
@@ -218,30 +222,27 @@ const TrainingComponent = () => {
         <div>
           <Button 
             className={classes.Rbutton}
-            variant="contained"
-            color="primary"
-            disabled={values.approval}
-            onClick={handleClickOpen}
-            >
-              承認
+            variant="contained" color="primary"
+            disabled={values.approval} onClick={handleClickOpen}
+          >
+            承認
+          </Button>
+
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={handleOnClickI} color="primary">
+              はい
             </Button>
-
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
-            </Dialog>
-
+            <Button onClick={handleClose} color="primary">
+              いいえ
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     };
@@ -261,7 +262,6 @@ const TrainingComponent = () => {
       id = user.user;
       approval = true;
     };
-
     const Ref = firebaseDb.ref(id +'r/training');
     const ref = firebaseDb.ref('report/training/' + id);
     if(keyIn === 0) {
@@ -309,13 +309,15 @@ const TrainingComponent = () => {
         updateRef.update({"approver" : name});
       };
     };
-    if(flagT === true) {
+
+    if(flagT) {
       alert('承認が完了しました。');
       history.push('/home2/book');
-    } else {
+    }
+    else {
       alert('提出が完了しました。\n各種書類提出画面へ');
       history.push('/home/select/report');
-    }
+    };
   };
 
   return (
@@ -325,19 +327,16 @@ const TrainingComponent = () => {
           <Typography className={classes.check1} >{check1}</Typography>
           <TextField
             className={classes.size}
-            name='company'
-            label="例）株式会社○○" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.company}
-            onChange={handleChange('company')}
+            name='company' label="例）株式会社○○" 
+            variant="outlined" disabled={flagT}
+            value={values.company} onChange={handleChange('company')}
           />
 
         <br/>
         <p>研修場所</p>
           <Typography className={classes.check1} >{check2}</Typography>
           <Paper variant="outlined" className={classes.haikei}>
-            <FormControl>
+            <FormControl className={classes.radio}>
               <RadioGroup row　aria-label="gender" name="gender1" value={values.location} onChange={handleChange('location')}>
                 <FormControlLabel value="本社" disabled={flagT} control={<Radio />} label="本社" />
                 <FormControlLabel value="支社" disabled={flagT} control={<Radio />} label="支社" />
@@ -350,24 +349,18 @@ const TrainingComponent = () => {
           <Typography className={classes.check1} >{check3}</Typography>
           <TextField
             className={classes.size}
-            name='facility'
-            label="研修施設名を入力" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.facility}
-            onChange={handleChange('facility')}
+            name='facility' label="研修施設名を入力" 
+            variant="outlined" disabled={flagT}
+            value={values.facility} onChange={handleChange('facility')}
           />
 
         <br/><br/>
           <Typography className={classes.check1} >{check4}</Typography>
           <TextField
             className={classes.size}
-            name='address'
-            label="住所を入力" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.address}
-            onChange={handleChange('address')}
+            name='address' label="住所を入力" 
+            variant="outlined" disabled={flagT}
+            value={values.address} onChange={handleChange('address')}
           />
 
         <p>研修期間を入力</p>
@@ -375,8 +368,7 @@ const TrainingComponent = () => {
           <TextField
             className={classes.size1}
             name='training_start'
-            type="date"
-            disabled={flagT}
+            type="date" disabled={flagT}
             value={values.training_start}
             onChange={handleChange('training_start')}
           />
@@ -384,8 +376,7 @@ const TrainingComponent = () => {
           <TextField
             className={classes.size1}
             name='training_end'
-            type="date"
-            disabled={flagT}
+            type="date" disabled={flagT}
             value={values.training_end}
             onChange={handleChange('training_end')}
           />
@@ -395,8 +386,7 @@ const TrainingComponent = () => {
           <TextField
             className={classes.size1}
             name='time_start'
-            type="time"
-            disabled={flagT}
+            type="time" disabled={flagT}
             value={values.time_start}
             onChange={handleChange('time_start')}
           />
@@ -404,8 +394,7 @@ const TrainingComponent = () => {
           <TextField
             className={classes.size1}
             name='time_end'
-            type="time"
-            disabled={flagT}
+            type="time" disabled={flagT}
             value={values.time_end}
             onChange={handleChange('time_end')}
           />
@@ -414,12 +403,9 @@ const TrainingComponent = () => {
           <Typography className={classes.check1} >{check7}</Typography>
           <TextField
             className={classes.size}
-            name='detail'
-            label="内容について入力" 
-            variant="outlined"
-            disabled={flagT}
-            multiline
-            rowsMax={4}
+            name='detail' label="内容について入力" 
+            variant="outlined" disabled={flagT}
+            multiline rowsMax={4}
             value={values.detail}
             onChange={handleChange('detail')}
           />
@@ -428,19 +414,15 @@ const TrainingComponent = () => {
           <Typography className={classes.check1} >{check8}</Typography>
           <TextField
             className={classes.size}
-            name='impressions'
-            label="感想を入力" 
-            variant="outlined"
-            disabled={flagT}
-            multiline
-            rowsMax={4}
+            name='impressions' label="感想を入力" 
+            variant="outlined" disabled={flagT}
+            multiline rowsMax={4}
             value={values.impressions}
             onChange={handleChange('impressions')}
           />
+        <br></br>
 
-          <br></br>
-
-          {formatText1()}
+        {formatText1()}
 
       </div>
     </div>

@@ -24,7 +24,7 @@ const BootstrapInput = withStyles((theme) => ({
   input: {
     borderRadius: 4,
     position: 'relative',
-    border: '1px solid #666666',
+    border: '1px solid #cccccc',
     backgroundColor: theme.palette.background.paper,
     fontSize: 16,
     //padding: '13px 180px 20px 180px',
@@ -73,26 +73,27 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     color: '#FFF',
     background: '#5cca13',
-    margin: '40px',
+    margin: 40,
     '&:hover': {
-      background: ' #4eaa10',
+      background: '#4eaa10',
     },
   },
-  haikei :{
+  radio: {
+    marginLeft: theme.spacing(2),
+  },
+
+  haikei: {
     margin: 'auto',
     width: 270,
     height: 45,
   },
-  bbb:{
-    marginLeft: 25,
-  },
-  size :{
+  size: {
     width: 270,
     backgroundColor: theme.palette.background.paper,
   },
 }));
 
-const Offer1Component = () => {
+const OfferComponent = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -358,11 +359,11 @@ const Offer1Component = () => {
       return(
           <div>
             <Button 
-            className={classes.Rbutton}
-            variant="contained"
-            color="primary"
-            disabled={values.approval}
-            onClick={handleClickOpen}
+              className={classes.Rbutton}
+              variant="contained"
+              color="primary"
+              disabled={values.approval}
+              onClick={handleClickOpen}
             >
               提出
             </Button>
@@ -372,15 +373,15 @@ const Offer1Component = () => {
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
-            <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
-            <DialogActions>
-              <Button onClick={handleOnClickI} color="primary">
-                はい
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                いいえ
-              </Button>
-            </DialogActions>
+              <DialogTitle id="alert-dialog-title">{"提出しますか？"}</DialogTitle>
+              <DialogActions>
+                <Button onClick={handleOnClickI} color="primary">
+                  はい
+                </Button>
+                <Button onClick={handleClose} color="primary">
+                  いいえ
+                </Button>
+              </DialogActions>
             </Dialog>
         </div>
       );
@@ -393,15 +394,15 @@ const Offer1Component = () => {
             color="primary"
             disabled={values.approval}
             onClick={handleClickOpen}
-            >
-              承認
-            </Button>
+          >
+            承認
+          </Button>
 
-            <Dialog
-              open={open}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
+          <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
             <DialogTitle id="alert-dialog-title">{"承認しますか？"}</DialogTitle>
             <DialogActions>
               <Button onClick={handleOnClickI} color="primary">
@@ -411,8 +412,7 @@ const Offer1Component = () => {
                 いいえ
               </Button>
             </DialogActions>
-            </Dialog>
-
+          </Dialog>
         </div>
       );
     };
@@ -432,7 +432,6 @@ const Offer1Component = () => {
       id = user.user;
       approval = true;
     };
-
     const Ref = firebaseDb.ref(id +'r/offer');
     const ref = firebaseDb.ref('report/offer/' + id);
     if(keyIn === 0) {
@@ -502,7 +501,8 @@ const Offer1Component = () => {
         updateRef.update({"approver" : name});
       };
     };
-    if(flagT === true) {
+
+    if(flagT) {
       alert('承認が完了しました。');
       history.push('/home2/book');
     } else {
@@ -518,122 +518,94 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check1}</Typography>
           <TextField
             className={classes.size}
-            name='company'
-            label="例）株式会社○○" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.company}
-            onChange={handleChange('company')}
+            name='company' label="例）株式会社○○" 
+            variant="outlined" disabled={flagT}
+            value={values.company} onChange={handleChange('company')}
           />
         
         <p>代表者情報</p>
           <Typography className={classes.check1} >{check2}</Typography>
           <TextField
             className={classes.size}
-            name='president'
-            label="例）情報　太郎" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.president}
-            onChange={handleChange('president')}
+            name='president' label="例）情報　太郎" 
+            variant="outlined" disabled={flagT}
+            value={values.president} onChange={handleChange('president')}
           />
 
         <p>役職</p>
           <Typography className={classes.check1} >{check3}</Typography>
           <TextField
             className={classes.size}
-            name='position'
-            label="例）代表取締役" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.position}
-            onChange={handleChange('position')}
+            name='position' label="例）代表取締役" 
+            variant="outlined" disabled={flagT}
+            value={values.position} onChange={handleChange('position')}
           />
 
         <p>本社所在地情報</p>
           <Typography className={classes.check1} >{check4}</Typography>
           <TextField
             className={classes.size}
-            name='postal_code'
-            type="number"
-            label="郵便番号を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.postal_code}
-            onChange={handleChange('postal_code')}
+            name='postal_code' label="郵便番号を入力"
+            type="number" variant="outlined" disabled={flagT}
+            value={values.postal_code} onChange={handleChange('postal_code')}
           />
 
         <br/><br/>
           <Typography className={classes.check1} >{check5}</Typography>
           <TextField
             className={classes.size}
-            name='address'
-            label="住所を入力" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.address}
-            onChange={handleChange('address')}
+            name='address' label="住所を入力" 
+            variant="outlined" disabled={flagT}
+            value={values.address} onChange={handleChange('address')}
           />
 
         <p>連絡先情報を入力</p>
           <Typography className={classes.check1} >{check6}</Typography>
           <TextField
             className={classes.size}
-            name='phone_number'
-            type="number"
-            label="電話番号を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.phone_number}
-            onChange={handleChange('phone_number')}
+            name='phone_number' label="電話番号を入力"
+            type="number" variant="outlined" disabled={flagT}
+            value={values.phone_number} onChange={handleChange('phone_number')}
           />
 
         <br/><br/>
           <Typography className={classes.check1} >{check7}</Typography>
           <TextField
             className={classes.size}
-            name='fax_number'
-            type="number"
-            label="FAXを入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.fax_number}
-            onChange={handleChange('fax_number')}
+            name='fax_number' label="FAXを入力"
+            type="number" variant="outlined" disabled={flagT}
+            value={values.fax_number} onChange={handleChange('fax_number')}
           />
 
         <p>事業情報</p>
           <Typography className={classes.check1} >{check8}</Typography>
           <TextField
             className={classes.size}
-            name='business'
-            label="例）システム開発" 
-            variant="outlined"
-            disabled={flagT}
-            value={values.business}
-            onChange={handleChange('business')}
+            name='business' label="例）システム開発" 
+            variant="outlined" disabled={flagT}
+            value={values.business} onChange={handleChange('business')}
           />
 
         <p>株式情報</p>
           <Typography className={classes.check1} >{check9}</Typography>
           <FormControl variant="outlined">
             <InputLabel htmlFor="select">株式市場</InputLabel>
-              <NativeSelect
+            <NativeSelect
               value={values.section}
-              open={open}
-              disabled={flagT}
+              open={open} disabled={flagT}
               onChange={handleChange('section')}
               input={<BootstrapInput />}
-              >
-                <option value="" aria-label="None"></option>
-                <option value="東証一部">東証一部</option>
-                <option value="東証二部">東証二部</option>
-                <option value="名証一部">名証一部</option>
-                <option value="名証二部">名証二部</option>
-                <option value="札証">札証</option>
-                <option value="福証">福証</option>
-                <option value="JASDAQ">JASDAQ</option>
-                <option value="TOKYO PRO Market">TOKYO PRO Market</option>
-                <option value="非上場">非上場</option>
+            >
+              <option value="" aria-label="None"></option>
+              <option value="東証一部">東証一部</option>
+              <option value="東証二部">東証二部</option>
+              <option value="名証一部">名証一部</option>
+              <option value="名証二部">名証二部</option>
+              <option value="札証">札証</option>
+              <option value="福証">福証</option>
+              <option value="JASDAQ">JASDAQ</option>
+              <option value="TOKYO PRO Market">TOKYO PRO Market</option>
+              <option value="非上場">非上場</option>
             </NativeSelect>
           </FormControl>
 
@@ -641,13 +613,9 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check10}</Typography>
           <TextField
             className={classes.size}
-            name='capital'
-            label="資本金を入力"
-            type="number"
-            variant="outlined"
-            disabled={flagT}
-            value={values.capital}
-            onChange={handleChange('capital')}
+            name='capital' label="資本金を入力"
+            type="number" variant="outlined" disabled={flagT}
+            value={values.capital} onChange={handleChange('capital')}
             InputProps={{
               endAdornment: <InputAdornment position="end">万</InputAdornment>,
             }}
@@ -657,13 +625,9 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check11}</Typography>
           <TextField
             className={classes.size}
-            name='sales'
-            label="年商を入力"
-            type="number"
-            variant="outlined"
-            disabled={flagT}
-            value={values.sales}
-            onChange={handleChange('sales')}
+            name='sales' label="年商を入力"
+            type="number" variant="outlined" disabled={flagT}
+            value={values.sales} onChange={handleChange('sales')}
             InputProps={{
               endAdornment: <InputAdornment position="end">万</InputAdornment>,
             }}
@@ -673,13 +637,9 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check12}</Typography>
           <TextField
             className={classes.size}
-            name='employees'
-            label="従業員数を入力"
-            type="number"
-            variant="outlined"
-            disabled={flagT}
-            value={values.employees}
-            onChange={handleChange('employees')}
+            name='employees' label="従業員数を入力"
+            type="number" variant="outlined" disabled={flagT}
+            value={values.employees} onChange={handleChange('employees')}
             InputProps={{
               endAdornment: <InputAdornment position="end">人</InputAdornment>,
             }}
@@ -689,29 +649,28 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check13}</Typography>
           <FormControl variant="outlined">
             <InputLabel htmlFor="select">業種</InputLabel>
-              <NativeSelect
+            <NativeSelect
               value={values.industry}
-              open={open}
-              disabled={flagT}
+              open={open} disabled={flagT}
               onChange={handleChange('industry')}
               input={<BootstrapInput />}
-              >
-                <option value="" aria-label="None"></option>
-                <option value="P.情報処理産業一般">P.情報処理産業一般</option>
-                <option value="A.農業">A.農業</option>
-                <option value="B.林業">B.林業</option>
-                <option value="C.漁業">C.漁業</option>
-                <option value="D.鉱業">D.鉱業</option>
-                <option value="E.建設業">E.建設業</option>
-                <option value="F.製造業">F.製造業</option>
-                <option value="G.電気・ガス・熱供給・水道業">G.電気・ガス・熱供給・水道業</option>
-                <option value="H.運輸・通信業">H.運輸・通信業</option>
-                <option value="I.卸売・小売業・飲食店">I.卸売・小売業・飲食店</option>
-                <option value="J.金融・保険業">J.金融・保険業</option>
-                <option value="K.不動産業">K.不動産業</option>
-                <option value="L.サービス業">L.サービス業</option>
-                <option value="M.公務">M.公務</option>
-                <option value="N.分類不能の産業">N.分類不能の産業</option>
+            >
+              <option value="" aria-label="None"></option>
+              <option value="P.情報処理産業一般">P.情報処理産業一般</option>
+              <option value="A.農業">A.農業</option>
+              <option value="B.林業">B.林業</option>
+              <option value="C.漁業">C.漁業</option>
+              <option value="D.鉱業">D.鉱業</option>
+              <option value="E.建設業">E.建設業</option>
+              <option value="F.製造業">F.製造業</option>
+              <option value="G.電気・ガス・熱供給・水道業">G.電気・ガス・熱供給・水道業</option>
+              <option value="H.運輸・通信業">H.運輸・通信業</option>
+              <option value="I.卸売・小売業・飲食店">I.卸売・小売業・飲食店</option>
+              <option value="J.金融・保険業">J.金融・保険業</option>
+              <option value="K.不動産業">K.不動産業</option>
+              <option value="L.サービス業">L.サービス業</option>
+              <option value="M.公務">M.公務</option>
+              <option value="N.分類不能の産業">N.分類不能の産業</option>
             </NativeSelect>
           </FormControl>
 
@@ -719,18 +678,17 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check14}</Typography>
           <FormControl variant="outlined">
             <InputLabel htmlFor="select">活動方法</InputLabel>
-              <NativeSelect
+            <NativeSelect
               value={values.activity}
-              open={open}
-              disabled={flagT}
+              open={open} disabled={flagT}
               onChange={handleChange('activity')}
               input={<BootstrapInput />}
-              >
-                <option value="" aria-label="None"></option>
-                <option value="学校斡旋">学校斡旋</option>
-                <option value="縁故">縁故</option>
-                <option value="自由応募">自由応募</option>
-                <option value="その他">その他</option>
+            >
+              <option value="" aria-label="None"></option>
+              <option value="学校斡旋">学校斡旋</option>
+              <option value="縁故">縁故</option>
+              <option value="自由応募">自由応募</option>
+              <option value="その他">その他</option>
             </NativeSelect>
           </FormControl>
 
@@ -738,12 +696,9 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check15}</Typography>
           <TextField
             className={classes.size}
-            name='details'
-            label="詳細を入力" 
-            variant="outlined"
-            disabled={loading || flagT}
-            value={values.details}
-            onChange={handleChange('details')}
+            name='details' label="詳細を入力" 
+            variant="outlined" disabled={loading || flagT}
+            value={values.details} onChange={handleChange('details')}
           />
 
         <br/><br/>
@@ -751,7 +706,7 @@ const Offer1Component = () => {
         <p>採用地区</p>
           <Typography className={classes.check1} >{check16}</Typography>
           <Paper variant="outlined" className={classes.haikei}>
-            <FormControl>
+            <FormControl className={classes.radio}>
               <RadioGroup row aria-label="gender" name="gender1"  value={values.location} onChange={handleChange('location')}>
                 <FormControlLabel value="本社" control={<Radio />} label="本社" disabled={flagT} />
                 <FormControlLabel value="支社" control={<Radio />} label="支社" disabled={flagT} />
@@ -762,42 +717,35 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check17}</Typography>
           <TextField
             className={classes.size}
-            name='branch_name'
-            label="支店名を入力" 
-            variant="outlined"
-            disabled={loading2 || flagT}
-            value={values.branch_name}
-            onChange={handleChange('branch_name')}
+            name='branch_name' label="支店名を入力" 
+            variant="outlined" disabled={loading2 || flagT}
+            value={values.branch_name} onChange={handleChange('branch_name')}
           />
 
         <p>勤務地を入力</p>
           <Typography className={classes.check1} >{check18}</Typography>
           <TextField
             className={classes.size}
-            name='work_place'
-            label="勤務地を入力"
-            variant="outlined"
-            disabled={flagT}
-            value={values.work_place}
-            onChange={handleChange('work_place')}
+            name='work_place' label="勤務地を入力"
+            variant="outlined" disabled={flagT}
+            value={values.work_place} onChange={handleChange('work_place')}
           />
 
         <p>採用区分</p>
           <Typography className={classes.check1} >{check19}</Typography>
           <FormControl variant="outlined">
             <InputLabel htmlFor="select">区分</InputLabel>
-              <NativeSelect
+            <NativeSelect
               value={values.educational}
-              open={open}
-              disabled={flagT}
+              open={open} disabled={flagT}
               onChange={handleChange('educational')}
               input={<BootstrapInput />}
-              >
-                <option value="" aria-label="None"></option>
-                <option value="大卒">大卒</option>
-                <option value="専門卒">専門卒</option>
-                <option value="高卒">高卒</option>
-                <option value="その他">その他</option>
+            >
+              <option value="" aria-label="None"></option>
+              <option value="大卒">大卒</option>
+              <option value="専門卒">専門卒</option>
+              <option value="高卒">高卒</option>
+              <option value="その他">その他</option>
             </NativeSelect>
           </FormControl>
 
@@ -805,23 +753,22 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check20}</Typography>
           <FormControl variant="outlined">
             <InputLabel htmlFor="select">職種</InputLabel>
-              <NativeSelect
+            <NativeSelect
               value={values.occupation}
-              open={open}
-              disabled={flagT}
+              open={open} disabled={flagT}
               onChange={handleChange('occupation')}
               input={<BootstrapInput />}
-              >
-                <option value="" aria-label="None"></option>
-                <option value="ソフト開発">ソフト開発</option>
-                <option value="インフラエンジニア">インフラエンジニア</option>
-                <option value="システム運用">システム運用</option>
-                <option value="ヘルプデスク">ヘルプデスク</option>
-                <option value="営業職">営業職</option>
-                <option value="事務職">事務職</option>
-                <option value="医療事務">医療事務</option>
-                <option value="技術職">技術職</option>
-                <option value="その他">その他</option>
+            >
+              <option value="" aria-label="None"></option>
+              <option value="ソフト開発">ソフト開発</option>
+              <option value="インフラエンジニア">インフラエンジニア</option>
+              <option value="システム運用">システム運用</option>
+              <option value="ヘルプデスク">ヘルプデスク</option>
+              <option value="営業職">営業職</option>
+              <option value="事務職">事務職</option>
+              <option value="医療事務">医療事務</option>
+              <option value="技術職">技術職</option>
+              <option value="その他">その他</option>
             </NativeSelect>
           </FormControl>
 
@@ -829,16 +776,12 @@ const Offer1Component = () => {
           <Typography className={classes.check1} >{check21}</Typography>
           <TextField
             className={classes.size}
-            name='job_description'
-            label="内容を入力"
-            variant="outlined"
-            disabled={flagT}
-            multiline
-            rowsMax={4}
+            name='job_description' label="内容を入力"
+            variant="outlined" disabled={flagT}
+            multiline rowsMax={4}
             value={values.job_description}
             onChange={handleChange('job_description')}
           />
-
           <br></br>
 
           {formatText1()}
@@ -848,4 +791,4 @@ const Offer1Component = () => {
   );
 };
 
-export default Offer1Component;
+export default OfferComponent;
