@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginRight: theme.spacing(6),
+    marginRight: theme.spacing(4),
   },
   appBar: {
     color: Colors.common.white,

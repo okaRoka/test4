@@ -298,7 +298,7 @@ const TalkComponent = () => {
           }}
           showLabels
         >
-          <BottomNavigationAction label="友達" className={classes.lbutton} icon={<PeopleAltIcon />} />
+          <BottomNavigationAction label="メンバー" className={classes.lbutton} icon={<PeopleAltIcon />} />
           <BottomNavigationAction label="履歴" className={classes.rbutton} icon={<RestoreIcon />} />
         </BottomNavigation>
       </div>
