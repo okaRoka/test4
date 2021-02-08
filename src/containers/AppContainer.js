@@ -31,6 +31,11 @@ const AppContainer = () => {
       primary: mode ? Colors.indigo : Colors.lightBlue,
       secondary: mode ? Colors.amber : Colors.yellow,
     },
+    mixins: {
+      toolbar: {
+        minHeight: 48,
+      }
+    },
   });
 
   return (
