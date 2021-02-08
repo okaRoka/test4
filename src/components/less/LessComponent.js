@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     width: 400,
     [theme.breakpoints.up('sm')]: {
-      width: 600,
+      width: 550,
     },
     //backgroundColor: theme.palette.primary.light,
     //backgroundColor: theme.palette.background.default,
