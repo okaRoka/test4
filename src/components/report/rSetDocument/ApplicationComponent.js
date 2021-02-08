@@ -75,32 +75,32 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   test :{
-    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
   },
   test1 :{
-    marginRight: theme.spacing(3),
+    marginRight: theme.spacing(2),
   },
 
   haikei :{
     margin: 'auto',
     //textAlign:'center',
-    width: 350,
+    width: 330,
     height: 170,
   },
   haikei1 :{
     margin: 'auto',
     textAlign:'right',
-    width: 350,
+    width: 330,
     height: 130,
   },
   size: {
-    width: 350,
+    width: 330,
     backgroundColor: theme.palette.background.paper,
   },
   size1 :{
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
-    width: 150,
+    width: 140,
   },
 }));
 
