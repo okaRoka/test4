@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   root2: {
     '& > *': {
       margin: theme.spacing(2),
-      width: '35ch',
+      width: '25ch',
     },
   },
   appBar: {

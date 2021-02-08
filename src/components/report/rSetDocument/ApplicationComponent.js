@@ -75,10 +75,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   test :{
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   test1 :{
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
 
   haikei :{
