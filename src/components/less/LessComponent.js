@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   Papar:{
     padding: 1,
     margin: 'auto',
-    width: 400,
+    width: 350,
     [theme.breakpoints.up('sm')]: {
       width: 550,
     },
