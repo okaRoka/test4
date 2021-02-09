@@ -313,6 +313,8 @@ const InternComponent = () => {
             className={classes.size}
             name='practice' label="内容を入力"
             variant="outlined" disabled={flagT}
+            multiline
+            rowsMax={4}
             value={values.practice} onChange={handleChange('practice')}
           />
       
@@ -322,6 +324,8 @@ const InternComponent = () => {
             className={classes.size}
             name='impressions' label="感想を入力"
             variant="outlined" disabled={flagT} 
+            multiline
+            rowsMax={4}
             value={values.impressions} onChange={handleChange('impressions')}
           />
         <br></br>
