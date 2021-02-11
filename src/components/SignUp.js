@@ -24,6 +24,7 @@ let counter = 0;
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    textAlign: 'center',
     '& > *': {
       margin: 'auto',
       marginTop: theme.spacing(2),
@@ -33,14 +34,14 @@ const useStyles = makeStyles((theme) => ({
   button: {
     padding: theme.spacing(1),
     margin: theme.spacing(2),
-    marginLeft: theme.spacing(6),
     color: Colors.common.white,
   },
   typography: {
     fontSize: 20,
+    marginLeft: theme.spacing(2),
   },
   avatar: {
-    marginRight: theme.spacing(5),
+    marginRight: theme.spacing(2),
   },
   gridList: {
     width: 240,

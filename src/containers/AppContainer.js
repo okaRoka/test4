@@ -28,8 +28,8 @@ const AppContainer = () => {
   const theme = createMuiTheme({
     palette: {
       type: mode ? 'dark' : 'light',
-      primary: mode ? Colors.indigo : Colors.lightBlue,
-      secondary: mode ? Colors.amber : Colors.yellow,
+      primary: mode ? Colors.lightBlue : Colors.indigo,
+      secondary: mode ? Colors.amber : Colors.orange,
     },
     mixins: {
       toolbar: {

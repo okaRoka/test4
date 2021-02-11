@@ -42,15 +42,9 @@ ref.on('child_added', (snapshot) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
-    marginRight: 10,
+    marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
-      marginLeft: 80,
-    },
-  },
-  root2: {
-    textAlign: 'center',
-    [theme.breakpoints.up('md')]: {
-      marginLeft: 135,
+      marginLeft: 200,
     },
   },
   nav: {
@@ -156,65 +150,60 @@ const TalkComponent = () => {
         return teachers.map((m, i) => {
           return (
             <div key={i}>
-              <List className={classes.root2}>
-                <ListItem button onClick={() => pushChatS(m.key)}>
-                  <ListItemAvatar>
-                    <Avatar className="" src={m.profileImage} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          color="textPrimary"
-                        >
-                          {m.userName}　先生
-                        </Typography>
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-              </List>
+              <ListItem button onClick={() => pushChatS(m.key)}>
+                <ListItemAvatar>
+                  <Avatar className="" src={m.profileImage} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        color="textPrimary"
+                      >
+                        {m.userName}　先生
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <Divider variant="inset" component="li" />
             </div>
-          )
+          );
         });
       }
       else {
         return recentS.map((m, i) => {
           return (
             <div key={i}>
-              <List className={classes.root2}>
-                <ListItem button onClick={() => pushChatS(m.key)}>
-                  <ListItemAvatar>
-                    <Avatar className="" src={m.profileImage} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          color="textPrimary"
-                        >
-                          {m.userName}　先生
-                        </Typography>
-                      </React.Fragment>
-                    }
-                    secondary={
-                      <React.Fragment>
-                        {m.text}
-                        <br/>
-                        {m.today}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-              </List>
+              <ListItem button onClick={() => pushChatS(m.key)}>
+                <ListItemAvatar>
+                  <Avatar className="" src={m.profileImage} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        color="textPrimary"
+                      >
+                        {m.userName}　先生
+                      </Typography>
+                    </React.Fragment>
+                  }
+                  secondary={
+                    <React.Fragment>
+                      {m.text}
+                      <br/>
+                      {m.today}
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <Divider variant="inset" component="li" />
             </div>
-          )
+          );
         });
-        
       };
     }
     else {
@@ -223,63 +212,59 @@ const TalkComponent = () => {
         return students.map((m, i) => {
           return (
             <div key={i}>
-              <List className={classes.root2}>
-                <ListItem button onClick={() => pushChatT(m.key)}>
-                  <ListItemAvatar>
-                    <Avatar className="" src={m.profileImage} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          color="textPrimary"
-                        >
-                          {m.userName}
-                        </Typography>
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-              </List>
+              <ListItem button onClick={() => pushChatT(m.key)}>
+                <ListItemAvatar>
+                  <Avatar className="" src={m.profileImage} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        color="textPrimary"
+                      >
+                        {m.userName}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <Divider variant="inset" component="li" />
             </div>
-          )
+          );
         });
       }
       else {
         return recentT.map((m, i) => {
           return (
             <div key={i}>
-              <List className={classes.root2}>
-                <ListItem button onClick={() => pushChatT(m.key)}>
-                  <ListItemAvatar>
-                    <Avatar className="" src={m.profileImage} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          color="textPrimary"
-                        >
-                          {m.userName}
-                        </Typography>
-                      </React.Fragment>
-                    }
-                    secondary={
-                      <React.Fragment>
-                        {m.text}
-                        <br/>
-                        {m.today}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-              </List>
+              <ListItem button onClick={() => pushChatT(m.key)}>
+                <ListItemAvatar>
+                  <Avatar className="" src={m.profileImage} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        color="textPrimary"
+                      >
+                        {m.userName}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                  secondary={
+                    <React.Fragment>
+                      {m.text}
+                      <br/>
+                      {m.today}
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <Divider variant="inset" component="li" />
             </div>
-          )
+          );
         });
       };
     };
@@ -287,9 +272,9 @@ const TalkComponent = () => {
 
   return (
     <div className={classes.root}>
-      <div>
+      <List>
         {cmp()}
-      </div>
+      </List>
       <div className={classes.nav}>
         <BottomNavigation
           value={value}

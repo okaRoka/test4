@@ -26,7 +26,7 @@ const Message = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       margin: 'auto',
-      marginBottom: 20,
+      marginBottom: theme.spacing(-3),
     },
     my: {
       marginLeft: 'auto',

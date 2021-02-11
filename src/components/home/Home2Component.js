@@ -11,15 +11,19 @@ import {firebaseDb} from '../../plugins/firebase';
 const ref = firebaseDb.ref('less');
 let messages = [];
 ref.on('child_added', (snapshot) => {
-    const m = snapshot.val();
+  const m = snapshot.val();
 
-    messages.unshift({
-      "title" : m.title,
-      "less" : m.less,
-      "id" : m.id,
-      "day" : m.day,
-      'key': snapshot.key,
-    });
+  messages.unshift({
+    "title" : m.title,
+    "less" : m.less,
+    "id" : m.id,
+    "day" : m.day,
+    'key': snapshot.key,
+  });
+});
+ref.on('child_removed', (snapshot) => {
+  const index = messages.findIndex( ({key}) => key === snapshot.key);
+  delete messages[index];
 });
 const ref2 = firebaseDb.ref('users');
 let teachers = [];

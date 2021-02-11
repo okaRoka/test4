@@ -14,93 +14,121 @@ import {firebaseDb} from '../../plugins/firebase';
 const ref = firebaseDb.ref('report');
 
 let intern = [];
-ref.child('intern').on('child_added', (snapshot) => {
-  const key = snapshot.key;
-  ref.child('intern/' +key).once('value', (parent) => {
-    const m = parent.val();
-    const count = parent.numChildren();
-    intern.push({
-      'user' : key,
-      'name' : m.name,
-      'count' : (count-1),
+ref.child('intern').on('value', (snapshot) => {
+  intern = [];
+  snapshot.forEach((childSnapshot) => {
+    const key = childSnapshot.key;
+
+    ref.child('intern/' +key).once('value', (parent) => {
+      const m = parent.val();
+      const count = parent.numChildren();
+      intern.push({
+        'user' : key,
+        'name' : m.name,
+        'count' : (count-1),
+      });
     });
   });
 });
 let application = [];
-ref.child('application').on('child_added', (snapshot) => {
-  const key = snapshot.key;
-  ref.child('application/' +key).once('value', (parent) => {
-    const m = parent.val();
-    const count = parent.numChildren();
-    application.push({
-      'user' : key,
-      'name' : m.name,
-      'count' : (count-1),
+ref.child('application').on('value', (snapshot) => {
+  application = [];
+  snapshot.forEach((childSnapshot) => {
+    const key = childSnapshot.key;
+
+    ref.child('application/' +key).once('value', (parent) => {
+      const m = parent.val();
+      const count = parent.numChildren();
+      application.push({
+        'user' : key,
+        'name' : m.name,
+        'count' : (count-1),
+      });
     });
   });
 });
 let participation = [];
-ref.child('participation').on('child_added', (snapshot) => {
-  const key = snapshot.key;
-  ref.child('participation/' +key).once('value', (parent) => {
-    const m = parent.val();
-    const count = parent.numChildren();
-    participation.push({
-      'user' : key,
-      'name' : m.name,
-      'count' : (count-1),
+ref.child('participation').on('value', (snapshot) => {
+  participation = [];
+  snapshot.forEach((childSnapshot) => {
+    const key = childSnapshot.key;
+
+    ref.child('participation/' +key).once('value', (parent) => {
+      const m = parent.val();
+      const count = parent.numChildren();
+      participation.push({
+        'user' : key,
+        'name' : m.name,
+        'count' : (count-1),
+      });
     });
   });
 });
 let examination = [];
-ref.child('examination').on('child_added', (snapshot) => {
-  const key = snapshot.key;
-  ref.child('examination/' +key).once('value', (parent) => {
-    const m = parent.val();
-    const count = parent.numChildren();
-    examination.push({
-      'user' : key,
-      'name' : m.name,
-      'count' : (count-1),
+ref.child('examination').on('value', (snapshot) => {
+  examination = [];
+  snapshot.forEach((childSnapshot) => {
+    const key = childSnapshot.key;
+
+    ref.child('examination/' +key).once('value', (parent) => {
+      const m = parent.val();
+      const count = parent.numChildren();
+      examination.push({
+        'user' : key,
+        'name' : m.name,
+        'count' : (count-1),
+      });
     });
   });
 });
 let assessment = [];
-ref.child('assessment').on('child_added', (snapshot) => {
-  const key = snapshot.key;
-  ref.child('assessment/' +key).once('value', (parent) => {
-    const m = parent.val();
-    const count = parent.numChildren();
-    assessment.push({
-      'user' : key,
-      'name' : m.name,
-      'count' : (count-1),
+ref.child('assessment').on('value', (snapshot) => {
+  assessment = [];
+  snapshot.forEach((childSnapshot) => {
+    const key = childSnapshot.key;
+
+    ref.child('assessment/' +key).once('value', (parent) => {
+      const m = parent.val();
+      const count = parent.numChildren();
+      assessment.push({
+        'user' : key,
+        'name' : m.name,
+        'count' : (count-1),
+      });
     });
   });
 });
 let offer = [];
-ref.child('offer').on('child_added', (snapshot) => {
-  const key = snapshot.key;
-  ref.child('offer/' +key).once('value', (parent) => {
-    const m = parent.val();
-    const count = parent.numChildren();
-    offer.push({
-      'user' : key,
-      'name' : m.name,
-      'count' : (count-1),
+ref.child('offer').on('value', (snapshot) => {
+  offer = [];
+  snapshot.forEach((childSnapshot) => {
+    const key = childSnapshot.key;
+
+    ref.child('offer/' +key).once('value', (parent) => {
+      const m = parent.val();
+      const count = parent.numChildren();
+      offer.push({
+        'user' : key,
+        'name' : m.name,
+        'count' : (count-1),
+      });
     });
   });
 });
 let training = [];
-ref.child('training').on('child_added', (snapshot) => {
-  const key = snapshot.key;
-  ref.child('training/' +key).once('value', (parent) => {
-    const m = parent.val();
-    const count = parent.numChildren();
-    training.push({
-      'user' : key,
-      'name' : m.name,
-      'count' : (count-1),
+ref.child('training').on('value', (snapshot) => {
+  training = [];
+  snapshot.forEach((childSnapshot) => {
+    const key = childSnapshot.key;
+
+    ref.child('training/' +key).once('value', (parent) => {
+      const m = parent.val();
+      const count = parent.numChildren();
+      training.push({
+        'user' : key,
+        'name' : m.name,
+        'count' : (count-1),
+      });
     });
   });
 });
@@ -108,10 +136,11 @@ ref.child('training').on('child_added', (snapshot) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       marginLeft: 220,
-      marginRight: 20,
     },
   },
   CS:{
